@@ -178,6 +178,14 @@ Danach ggf. lokale Anpassungen (Annotations, Mockdaten) erneut prüfen. Für den
 
 Details und Setup: Abschnitt **Initiale Einstellung** oben; App-README: [`app/azp-workschedulerule/README.md`](app/azp-workschedulerule/README.md).
 
+**List Report** – Übersicht und Filter der Arbeitszeitplanregeln (Kopieren, Monat simulieren, Anlegen):
+
+![Fiori List Report – Arbeitszeitpläne](docu/main.png)
+
+**Object Page** – Detail einer Regel mit Allgemein, Wochenmuster, Tagesplänen und Pausen:
+
+![Fiori Object Page – Arbeitszeitplan-Detail](docu/detailed.png)
+
 OData-URL (Binding `ZUI_ZAZP_RULE_UI`):
 
 ```text
