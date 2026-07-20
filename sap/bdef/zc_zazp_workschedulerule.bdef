@@ -1,0 +1,45 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_ZAZP_WorkScheduleRule alias Rule
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use action copyAsTemplate;
+  use action simulateMonth;
+
+  use association _Weeks { create; with draft; }
+  use association _DailySchedules { create; with draft; }
+  use association _BreakSchedules { create; with draft; }
+}
+
+define behavior for ZC_ZAZP_WeekPattern alias Week
+{
+  use update;
+  use delete;
+  use association _Rule { with draft; }
+}
+
+define behavior for ZC_ZAZP_DailyWorkSchedule alias Daily
+{
+  use update;
+  use delete;
+  use association _Rule { with draft; }
+}
+
+define behavior for ZC_ZAZP_BreakSchedule alias Break
+{
+  use update;
+  use delete;
+  use association _Rule { with draft; }
+}

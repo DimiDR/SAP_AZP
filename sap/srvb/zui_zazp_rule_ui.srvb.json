@@ -1,0 +1,23 @@
+{
+  "name": "ZUI_ZAZP_RULE_UI",
+  "description": "AZP WorkSchedule OData V4 UI",
+  "type": "SRVB/SVB",
+  "odataVersion": "V4",
+  "bindingType": "ODATA",
+  "bindingCategory": "UI",
+  "published": true,
+  "bindingCreated": true,
+  "contract": "C2",
+  "releaseSupported": true,
+  "serviceDefinition": "ZUI_ZAZP_WORKSCHEDULERULE",
+  "serviceName": "ZUI_ZAZP_RULE_UI",
+  "serviceVersion": "0001",
+  "releaseState": "NOT_RELEASED",
+  "package": "ZAZP_HR_TIME",
+  "implementation": "ZUI_ZAZP_RULE_UI",
+  "language": "EN",
+  "changedAt": "2026-07-19T15:20:19Z",
+  "changedBy": "RYBAK-D",
+  "serviceUrl": "/sap/opu/odata4/sap/zui_zazp_rule_ui/srvd_a2x/sap/zui_zazp_workschedulerule/0001/",
+  "note": "Published via /IWFND/V4_ADMIN (Customizing client). ADT local publish not allowed. See docu/technisch/AZP-OData-V4-Service.md."
+}

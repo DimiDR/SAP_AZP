@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+#
+# Template (tracked in Git). For local use:
+#   copy ui5-mock.yaml.example → ui5-mock.yaml
+# Mock data needs no auth; keep auth commented unless you fall through to the backend.
+# ui5-mock.yaml is gitignored.
+
+specVersion: "4.0"
+metadata:
+  name: azpworkschedulerule
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertErrors: true # S4P lab certs are not publicly trusted
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+        backend:
+          - path: /sap
+            url: https://adeps4p0.saplab.3as-cloud.de:44300
+            client: "101"
+            # auth: "USER:PASSWORD"
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        flp:
+          theme: sap_horizon
+          path: test/flpSandbox.html
+          intent:
+            object: azpworkschedulerule
+            action: tile
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata4/sap/zui_zazp_rule_ui/srvd_a2x/sap/zui_zazp_workschedulerule/0001
+            metadataPath: ./webapp/localService/mainService/metadata.xml
+            mockdataPath: ./webapp/localService/mainService/data
+            generateMockData: false
+        annotations:
+          - localPath: ./webapp/annotations/annotation.xml
+            urlPath: annotations/annotation.xml

@@ -1,0 +1,32 @@
+{
+  "generationParameters": {
+    "generationDate": "Sun Jul 19 2026 16:24:39 GMT+0200 (Mitteleuropäische Sommerzeit)",
+    "generatorPlatform": "CLI",
+    "serviceType": "OData URL",
+    "metadataFilename": "",
+    "serviceUrl": "https://localhost/sap/opu/odata4/sap/zui_zazp_rule_o4/srvd_a2x/sap/zui_zazp_workschedulerule/0001/",
+    "appName": "azp-workschedulerule",
+    "appTitle": "Arbeitszeitpläne",
+    "appDescription": "AZP Arbeitszeitplanregeln pflegen (Fiori Elements)",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.132.1",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.25.0",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "WorkScheduleRule"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "None"
+      }
+    ],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}

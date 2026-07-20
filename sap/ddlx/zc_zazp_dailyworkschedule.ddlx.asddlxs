@@ -1,0 +1,18 @@
+@Metadata.layer: #CUSTOMER
+annotate view ZC_ZAZP_DailyWorkSchedule with
+{
+  @UI.lineItem: [{ position: 10 }]
+  Code;
+  @UI.lineItem: [{ position: 20 }]
+  TargetHours;
+  @UI.lineItem: [{ position: 30 }]
+  WorkStart;
+  @UI.lineItem: [{ position: 40 }]
+  WorkEnd;
+  @UI.lineItem: [{ position: 50 }]
+  CoreStart;
+  @UI.lineItem: [{ position: 60 }]
+  CoreEnd;
+  @UI.lineItem: [{ position: 70 }]
+  BreakId;
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'AZP Access Control WorkScheduleRule'
+@MappingRole: true
+define role ZI_ZAZP_WorkScheduleRule {
+  grant select on ZI_ZAZP_WorkScheduleRule;
+}

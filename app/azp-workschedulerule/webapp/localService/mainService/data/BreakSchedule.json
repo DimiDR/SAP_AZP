@@ -1,0 +1,32 @@
+[
+  {
+    "DwsGrouping": "01",
+    "BreakId": "P30",
+    "SeqNo": "01",
+    "StartTime": "12:00:00",
+    "EndTime": "12:30:00",
+    "PaidHours": null,
+    "UnpaidHours": 0.5,
+    "AfterHours": null
+  },
+  {
+    "DwsGrouping": "01",
+    "BreakId": "P15",
+    "SeqNo": "01",
+    "StartTime": null,
+    "EndTime": null,
+    "PaidHours": 0.25,
+    "UnpaidHours": null,
+    "AfterHours": 6.0
+  },
+  {
+    "DwsGrouping": "02",
+    "BreakId": "P30",
+    "SeqNo": "01",
+    "StartTime": "10:00:00",
+    "EndTime": "10:30:00",
+    "PaidHours": null,
+    "UnpaidHours": 0.5,
+    "AfterHours": null
+  }
+]

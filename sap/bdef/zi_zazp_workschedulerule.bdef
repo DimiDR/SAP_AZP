@@ -1,0 +1,87 @@
+managed with unmanaged save implementation in class zbp_i_zazp_workschedulerule unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_ZAZP_WorkScheduleRule alias Rule
+draft table zazp_d_rule
+lock master total etag LastChangedAt
+etag master LocalLastChangedAt
+authorization master ( instance, global )
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) Description, LastChangedAt, LocalLastChangedAt;
+  field ( readonly : update ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, ValidTo;
+  field ( mandatory : create ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, ValidTo, ValidFrom, DwsGrouping, PeriodId;
+
+  validation valWeekSum on save { create; update; }
+  validation valTimeframe on save { create; update; }
+  validation valBreaks on save { create; update; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare
+  {
+    validation valWeekSum;
+    validation valTimeframe;
+    validation valBreaks;
+  }
+
+  action ( features : instance ) copyAsTemplate
+    parameter ZA_ZAZP_CopyParams
+    result [1] $self;
+
+  action simulateMonth
+    parameter ZA_ZAZP_MonthParams
+    result [0..*] ZI_ZAZP_SimDay;
+
+  association _Weeks { create; with draft; }
+  association _DailySchedules { create; with draft; }
+  association _BreakSchedules { create; with draft; }
+}
+
+define behavior for ZI_ZAZP_WeekPattern alias Week
+draft table zazp_d_week
+lock dependent by _Rule
+authorization dependent by _Rule
+{
+  update;
+  delete;
+  field ( readonly ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, ValidTo, DwsGrouping, PeriodId;
+  field ( readonly : update ) WeekNumber;
+  field ( mandatory : create ) WeekNumber;
+  determination fillWeekFromParent on modify { create; }
+  association _Rule { with draft; }
+}
+
+define behavior for ZI_ZAZP_DailyWorkSchedule alias Daily
+draft table zazp_d_daily
+lock dependent by _Rule
+authorization dependent by _Rule
+{
+  update;
+  delete;
+  field ( readonly ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, RuleValidTo, DwsGrouping;
+  field ( readonly : update ) Code, Variant, ValidTo;
+  field ( mandatory : create ) Code, Variant, ValidTo;
+  determination fillDailyFromParent on modify { create; }
+  association _Rule { with draft; }
+}
+
+define behavior for ZI_ZAZP_BreakSchedule alias Break
+draft table zazp_d_break
+lock dependent by _Rule
+authorization dependent by _Rule
+{
+  update;
+  delete;
+  field ( readonly ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, RuleValidTo, DwsGrouping;
+  field ( readonly : update ) BreakId, SeqNo;
+  field ( mandatory : create ) BreakId, SeqNo;
+  determination fillBreakFromParent on modify { create; }
+  association _Rule { with draft; }
+}

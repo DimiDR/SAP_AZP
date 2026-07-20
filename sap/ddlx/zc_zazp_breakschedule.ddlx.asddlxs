@@ -1,0 +1,18 @@
+@Metadata.layer: #CUSTOMER
+annotate view ZC_ZAZP_BreakSchedule with
+{
+  @UI.lineItem: [{ position: 10 }]
+  BreakId;
+  @UI.lineItem: [{ position: 20 }]
+  SeqNo;
+  @UI.lineItem: [{ position: 30 }]
+  StartTime;
+  @UI.lineItem: [{ position: 40 }]
+  EndTime;
+  @UI.lineItem: [{ position: 50 }]
+  PaidHours;
+  @UI.lineItem: [{ position: 60 }]
+  UnpaidHours;
+  @UI.lineItem: [{ position: 70 }]
+  AfterHours;
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "Pernr": "10023456",
+    "ValidTo": "9999-12-31",
+    "ValidFrom": "2025-01-01",
+    "RuleId": "GLZ38",
+    "EmployeeName": "Muster, Anna",
+    "EmploymentPct": 100.0,
+    "TimeMgmtStatus": "1",
+    "WeeklyHours": 38.5,
+    "AssignmentStatus": "übertragen"
+  },
+  {
+    "Pernr": "10023457",
+    "ValidTo": "9999-12-31",
+    "ValidFrom": "2025-01-01",
+    "RuleId": "GLZ38",
+    "EmployeeName": "Schmidt, Tom",
+    "EmploymentPct": 100.0,
+    "TimeMgmtStatus": "1",
+    "WeeklyHours": 38.5,
+    "AssignmentStatus": "übertragen"
+  },
+  {
+    "Pernr": "10030001",
+    "ValidTo": "9999-12-31",
+    "ValidFrom": "2025-04-01",
+    "RuleId": "SCH3W",
+    "EmployeeName": "Weber, Lea",
+    "EmploymentPct": 100.0,
+    "TimeMgmtStatus": "1",
+    "WeeklyHours": 37.0,
+    "AssignmentStatus": "geplant"
+  }
+]

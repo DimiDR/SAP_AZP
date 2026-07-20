@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityType Name="WorkScheduleRuleType">
+                <Key>
+                    <PropertyRef Name="RuleId"/>
+                    <PropertyRef Name="ValidTo"/>
+                </Key>
+                <Property Name="RuleId" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="ValidTo" Type="Edm.Date" Nullable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="HolidayCalendarId" Type="Edm.String" MaxLength="2"/>
+                <Property Name="PsGrouping" Type="Edm.String" MaxLength="2"/>
+                <Property Name="EsGrouping" Type="Edm.String" MaxLength="1"/>
+                <Property Name="DwsGrouping" Type="Edm.String" MaxLength="2"/>
+                <Property Name="PeriodId" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ValidFrom" Type="Edm.Date"/>
+                <Property Name="AvgDayHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="AvgWeekHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="AvgMonthHours" Type="Edm.Decimal" Precision="7" Scale="2"/>
+                <Property Name="AvgYearHours" Type="Edm.Decimal" Precision="7" Scale="2"/>
+                <Property Name="WorkdaysPerWeek" Type="Edm.Decimal" Precision="3" Scale="1"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="10"/>
+                <Property Name="StatusCriticality" Type="Edm.Int32"/>
+        <NavigationProperty Name="_Weeks" Type="Collection(com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType)" Partner="_Rule">
+          <ReferentialConstraint Property="DwsGrouping" ReferencedProperty="DwsGrouping"/>
+          <ReferentialConstraint Property="PeriodId" ReferencedProperty="PeriodId"/>
+        </NavigationProperty>
+        <NavigationProperty Name="_Assignments" Type="Collection(com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType)" Partner="_Rule">
+          <ReferentialConstraint Property="RuleId" ReferencedProperty="RuleId"/>
+        </NavigationProperty>
+        <NavigationProperty Name="_DailySchedules" Type="Collection(com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType)">
+          <ReferentialConstraint Property="DwsGrouping" ReferencedProperty="DwsGrouping"/>
+        </NavigationProperty>
+        <NavigationProperty Name="_BreakSchedules" Type="Collection(com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType)">
+          <ReferentialConstraint Property="DwsGrouping" ReferencedProperty="DwsGrouping"/>
+        </NavigationProperty>
+      </EntityType>
+            
+            <EntityType Name="WeekPatternType">
+                <Key>
+                    <PropertyRef Name="DwsGrouping"/>
+                    <PropertyRef Name="PeriodId"/>
+                    <PropertyRef Name="WeekNumber"/>
+                </Key>
+                <Property Name="DwsGrouping" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="PeriodId" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="WeekNumber" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Monday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Tuesday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Wednesday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Thursday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Friday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Saturday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Sunday" Type="Edm.String" MaxLength="4"/>
+                <Property Name="WeekHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <NavigationProperty Name="_Rule" Type="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType" Partner="_Weeks"/>
+            </EntityType>
+            
+            <EntityType Name="DailyWorkScheduleType">
+                <Key>
+                    <PropertyRef Name="DwsGrouping"/>
+                    <PropertyRef Name="Code"/>
+                    <PropertyRef Name="Variant"/>
+                    <PropertyRef Name="ValidTo"/>
+                </Key>
+                <Property Name="DwsGrouping" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Code" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="Variant" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="ValidTo" Type="Edm.Date" Nullable="false"/>
+                <Property Name="ValidFrom" Type="Edm.Date"/>
+                <Property Name="TargetHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="WorkStart" Type="Edm.TimeOfDay"/>
+                <Property Name="WorkEnd" Type="Edm.TimeOfDay"/>
+                <Property Name="NormalStart" Type="Edm.TimeOfDay"/>
+                <Property Name="NormalEnd" Type="Edm.TimeOfDay"/>
+                <Property Name="CoreStart" Type="Edm.TimeOfDay"/>
+                <Property Name="CoreEnd" Type="Edm.TimeOfDay"/>
+                <Property Name="BreakId" Type="Edm.String" MaxLength="4"/>
+            </EntityType>
+            
+            <EntityType Name="BreakScheduleType">
+                <Key>
+                    <PropertyRef Name="DwsGrouping"/>
+                    <PropertyRef Name="BreakId"/>
+                    <PropertyRef Name="SeqNo"/>
+                </Key>
+                <Property Name="DwsGrouping" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="BreakId" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="SeqNo" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="StartTime" Type="Edm.TimeOfDay"/>
+                <Property Name="EndTime" Type="Edm.TimeOfDay"/>
+                <Property Name="PaidHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="UnpaidHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="AfterHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+            </EntityType>
+            
+            <EntityType Name="EmployeeAssignmentType">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                    <PropertyRef Name="ValidTo"/>
+                </Key>
+                <Property Name="Pernr" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="ValidTo" Type="Edm.Date" Nullable="false"/>
+                <Property Name="ValidFrom" Type="Edm.Date"/>
+                <Property Name="RuleId" Type="Edm.String" MaxLength="8"/>
+                <Property Name="EmployeeName" Type="Edm.String" MaxLength="80"/>
+                <Property Name="EmploymentPct" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="TimeMgmtStatus" Type="Edm.String" MaxLength="1"/>
+                <Property Name="WeeklyHours" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="AssignmentStatus" Type="Edm.String" MaxLength="20"/>
+                <NavigationProperty Name="_Rule" Type="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType" Partner="_Assignments"/>
+            </EntityType>
+            
+            <EntityType Name="HolidayCalendarType">
+                <Key>
+                    <PropertyRef Name="HolidayCalendarId"/>
+                </Key>
+                <Property Name="HolidayCalendarId" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            
+            <EntityContainer Name="Container">
+                <EntitySet Name="WorkScheduleRule" EntityType="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType">
+                    <NavigationPropertyBinding Path="_Weeks" Target="WeekPattern"/>
+                    <NavigationPropertyBinding Path="_Assignments" Target="EmployeeAssignment"/>
+                    <NavigationPropertyBinding Path="_DailySchedules" Target="DailyWorkSchedule"/>
+                    <NavigationPropertyBinding Path="_BreakSchedules" Target="BreakSchedule"/>
+                </EntitySet>
+                <EntitySet Name="WeekPattern" EntityType="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType">
+                    <NavigationPropertyBinding Path="_Rule" Target="WorkScheduleRule"/>
+                </EntitySet>
+                <EntitySet Name="DailyWorkSchedule" EntityType="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType"/>
+                <EntitySet Name="BreakSchedule" EntityType="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType"/>
+                <EntitySet Name="EmployeeAssignment" EntityType="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType">
+                    <NavigationPropertyBinding Path="_Rule" Target="WorkScheduleRule"/>
+                </EntitySet>
+                <EntitySet Name="HolidayCalendar" EntityType="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.HolidayCalendarType"/>
+            </EntityContainer>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.Container/WorkScheduleRule">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="true"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Arbeitszeitplan"/>
+                        <PropertyValue Property="TypeNamePlural" String="Arbeitszeitpläne"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="RuleId"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="Description"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>RuleId</PropertyPath>
+                        <PropertyPath>PsGrouping</PropertyPath>
+                        <PropertyPath>HolidayCalendarId</PropertyPath>
+                        <PropertyPath>ValidFrom</PropertyPath>
+                        <PropertyPath>Status</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="RuleId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AvgWeekHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="HolidayCalendarId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Status"/>
+                            <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Allgemeine Daten"/>
+                            <PropertyValue Property="ID" String="GeneralInformation"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#General"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Durchschnittswerte"/>
+                            <PropertyValue Property="ID" String="Averages"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Averages"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Wochenmuster"/>
+                            <PropertyValue Property="ID" String="WeekPattern"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Weeks/@UI.LineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Tagesarbeitszeitpläne"/>
+                            <PropertyValue Property="ID" String="DailySchedules"/>
+                            <PropertyValue Property="Target" AnnotationPath="_DailySchedules/@UI.LineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Pausenpläne"/>
+                            <PropertyValue Property="ID" String="BreakSchedules"/>
+                            <PropertyValue Property="Target" AnnotationPath="_BreakSchedules/@UI.LineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Mitarbeiterzuordnung"/>
+                            <PropertyValue Property="ID" String="Assignments"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Assignments/@UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="General">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="RuleId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Description"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="HolidayCalendarId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="PsGrouping"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="EsGrouping"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="DwsGrouping"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="PeriodId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="ValidFrom"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="ValidTo"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Status"/>
+                                    <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Averages">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="AvgDayHours"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="AvgWeekHours"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="AvgMonthHours"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="AvgYearHours"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="WorkdaysPerWeek"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Status"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#AvgWeek"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="Status">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="Status"/>
+                        <PropertyValue Property="Title" String="Status"/>
+                        <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="AvgWeek">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="AvgWeekHours"/>
+                        <PropertyValue Property="Title" String="Ø Woche"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/RuleId">
+                <Annotation Term="Common.Label" String="AZP-ID"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/Description">
+                <Annotation Term="Common.Label" String="Bezeichnung"/>
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/HolidayCalendarId">
+                <Annotation Term="Common.Label" String="Feiertagskalender"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/PsGrouping">
+                <Annotation Term="Common.Label" String="PS-Gruppierung"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/EsGrouping">
+                <Annotation Term="Common.Label" String="ES-Gruppierung"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/DwsGrouping">
+                <Annotation Term="Common.Label" String="Tagesplan-Gruppierung"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/PeriodId">
+                <Annotation Term="Common.Label" String="Periodenarbeitszeitplan"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/ValidFrom">
+                <Annotation Term="Common.Label" String="Gültig ab"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/ValidTo">
+                <Annotation Term="Common.Label" String="Gültig bis"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/AvgDayHours">
+                <Annotation Term="Common.Label" String="Ø Tag (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/AvgWeekHours">
+                <Annotation Term="Common.Label" String="Ø Woche (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/AvgMonthHours">
+                <Annotation Term="Common.Label" String="Ø Monat (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/AvgYearHours">
+                <Annotation Term="Common.Label" String="Ø Jahr (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/WorkdaysPerWeek">
+                <Annotation Term="Common.Label" String="Tage/Woche"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/Status">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WeekNumber"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Monday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Tuesday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Wednesday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Thursday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Friday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Saturday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Sunday"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WeekHours"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/WeekNumber">
+                <Annotation Term="Common.Label" String="Woche"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Monday">
+                <Annotation Term="Common.Label" String="Mo"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Tuesday">
+                <Annotation Term="Common.Label" String="Di"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Wednesday">
+                <Annotation Term="Common.Label" String="Mi"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Thursday">
+                <Annotation Term="Common.Label" String="Do"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Friday">
+                <Annotation Term="Common.Label" String="Fr"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Saturday">
+                <Annotation Term="Common.Label" String="Sa"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/Sunday">
+                <Annotation Term="Common.Label" String="So"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType/WeekHours">
+                <Annotation Term="Common.Label" String="Σ Woche"/>
+            </Annotations>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Code"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TargetHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WorkStart"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WorkEnd"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="NormalStart"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="NormalEnd"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CoreStart"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CoreEnd"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BreakId"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/Code">
+                <Annotation Term="Common.Label" String="Tagesplan"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/TargetHours">
+                <Annotation Term="Common.Label" String="Soll (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/WorkStart">
+                <Annotation Term="Common.Label" String="Beginn"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/WorkEnd">
+                <Annotation Term="Common.Label" String="Ende"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/NormalStart">
+                <Annotation Term="Common.Label" String="Normalzeit von"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/NormalEnd">
+                <Annotation Term="Common.Label" String="Normalzeit bis"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/CoreStart">
+                <Annotation Term="Common.Label" String="Kernzeit von"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/CoreEnd">
+                <Annotation Term="Common.Label" String="Kernzeit bis"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType/BreakId">
+                <Annotation Term="Common.Label" String="Pausenplan"/>
+            </Annotations>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BreakId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="SeqNo"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="StartTime"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="EndTime"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PaidHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="UnpaidHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AfterHours"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/BreakId">
+                <Annotation Term="Common.Label" String="Pausenplan"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/SeqNo">
+                <Annotation Term="Common.Label" String="Nr"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/StartTime">
+                <Annotation Term="Common.Label" String="Von"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/EndTime">
+                <Annotation Term="Common.Label" String="Bis"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/PaidHours">
+                <Annotation Term="Common.Label" String="Bezahlt (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/UnpaidHours">
+                <Annotation Term="Common.Label" String="Unbezahlt (h)"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.BreakScheduleType/AfterHours">
+                <Annotation Term="Common.Label" String="Dynamisch nach (h)"/>
+            </Annotations>
+            
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Pernr"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="EmployeeName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="EmploymentPct"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WeeklyHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AssignmentStatus"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType/Pernr">
+                <Annotation Term="Common.Label" String="Personalnummer"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType/EmployeeName">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType/ValidFrom">
+                <Annotation Term="Common.Label" String="Gültig ab"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType/EmploymentPct">
+                <Annotation Term="Common.Label" String="Beschäft. %"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType/WeeklyHours">
+                <Annotation Term="Common.Label" String="Wochenstunden"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.EmployeeAssignmentType/AssignmentStatus">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

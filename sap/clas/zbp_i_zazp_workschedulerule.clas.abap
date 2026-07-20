@@ -1,0 +1,14 @@
+CLASS zbp_i_zazp_workschedulerule DEFINITION
+  PUBLIC
+  ABSTRACT
+  FINAL
+  FOR BEHAVIOR OF zi_zazp_workschedulerule.
+
+  PUBLIC SECTION.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS zbp_i_zazp_workschedulerule IMPLEMENTATION.
+ENDCLASS.

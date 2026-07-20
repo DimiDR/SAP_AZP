@@ -1,0 +1,67 @@
+[
+  {
+    "DwsGrouping": "01",
+    "PeriodId": "GLZ",
+    "WeekNumber": "01",
+    "Monday": "Z780",
+    "Tuesday": "Z780",
+    "Wednesday": "Z780",
+    "Thursday": "Z780",
+    "Friday": "Z770",
+    "Saturday": "FREI",
+    "Sunday": "FREI",
+    "WeekHours": 38.5
+  },
+  {
+    "DwsGrouping": "01",
+    "PeriodId": "TZ23",
+    "WeekNumber": "01",
+    "Monday": "Z464",
+    "Tuesday": "Z464",
+    "Wednesday": "Z464",
+    "Thursday": "Z464",
+    "Friday": "Z464",
+    "Saturday": "FREI",
+    "Sunday": "FREI",
+    "WeekHours": 23.2
+  },
+  {
+    "DwsGrouping": "02",
+    "PeriodId": "SCH3",
+    "WeekNumber": "01",
+    "Monday": "F740",
+    "Tuesday": "F740",
+    "Wednesday": "S740",
+    "Thursday": "S740",
+    "Friday": "N740",
+    "Saturday": "FREI",
+    "Sunday": "FREI",
+    "WeekHours": 37.0
+  },
+  {
+    "DwsGrouping": "02",
+    "PeriodId": "SCH3",
+    "WeekNumber": "02",
+    "Monday": "S740",
+    "Tuesday": "S740",
+    "Wednesday": "N740",
+    "Thursday": "N740",
+    "Friday": "F740",
+    "Saturday": "FREI",
+    "Sunday": "FREI",
+    "WeekHours": 37.0
+  },
+  {
+    "DwsGrouping": "02",
+    "PeriodId": "SCH3",
+    "WeekNumber": "03",
+    "Monday": "N740",
+    "Tuesday": "N740",
+    "Wednesday": "F740",
+    "Thursday": "F740",
+    "Friday": "S740",
+    "Saturday": "FREI",
+    "Sunday": "FREI",
+    "WeekHours": 37.0
+  }
+]

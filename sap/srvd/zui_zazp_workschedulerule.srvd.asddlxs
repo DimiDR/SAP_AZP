@@ -1,0 +1,9 @@
+@EndUserText.label: 'AZP Work Schedule Rule UI Service'
+define service ZUI_ZAZP_WORKSCHEDULERULE {
+  expose ZC_ZAZP_WorkScheduleRule as WorkScheduleRule;
+  expose ZC_ZAZP_WeekPattern as WeekPattern;
+  expose ZC_ZAZP_DailyWorkSchedule as DailyWorkSchedule;
+  expose ZC_ZAZP_BreakSchedule as BreakSchedule;
+  expose ZC_ZAZP_EmployeeAssignment as EmployeeAssignment;
+  expose ZI_ZAZP_HolidayCalendar as HolidayCalendar;
+}

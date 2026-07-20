@@ -1,0 +1,10 @@
+[
+  {
+    "HolidayCalendarId": "01",
+    "Description": "DE Standard"
+  },
+  {
+    "HolidayCalendarId": "02",
+    "Description": "DE Schichtbetrieb"
+  }
+]

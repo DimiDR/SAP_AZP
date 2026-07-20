@@ -1,0 +1,327 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata4/sap/zui_zazp_rule_ui/srvd_a2x/sap/zui_zazp_workschedulerule/0001/$metadata">
+        <edmx:Include Namespace="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+            <!-- Service binding is Web API: CDS DDLX UI annotations are not in $metadata.
+                 Provide FE annotations locally until a UI binding is published. -->
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Arbeitszeitplan"/>
+                        <PropertyValue Property="TypeNamePlural" String="Arbeitszeitpläne"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="RuleId"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="Description"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>RuleId</PropertyPath>
+                        <PropertyPath>PsGrouping</PropertyPath>
+                        <PropertyPath>HolidayCalendarId</PropertyPath>
+                        <PropertyPath>ValidFrom</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Kopieren"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.copyAsTemplate"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Monat simulieren"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.simulateMonth"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="RuleId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PsGrouping"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="HolidayCalendarId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidTo"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AvgWeekHours"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Kopieren"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.copyAsTemplate"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Monat simulieren"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.simulateMonth"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="RuleId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Description"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PsGrouping"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="HolidayCalendarId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="EsGrouping"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DwsGrouping"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PeriodId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidTo"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AvgWeekHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AvgDayHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AvgMonthHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AvgYearHours"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="WorkdaysPerWeek"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ReferenceDate"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="OffsetDays"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="General"/>
+                            <PropertyValue Property="Label" String="Allgemein"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.Identification"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Weeks"/>
+                            <PropertyValue Property="Label" String="Wochenmuster"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Weeks/@UI.LineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Dailies"/>
+                            <PropertyValue Property="Label" String="Tagespläne"/>
+                            <PropertyValue Property="Target" AnnotationPath="_DailySchedules/@UI.LineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Breaks"/>
+                            <PropertyValue Property="Label" String="Pausen"/>
+                            <PropertyValue Property="Target" AnnotationPath="_BreakSchedules/@UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- Filter value helps: without Common.ValueList, FE opens only
+                 "Define Conditions" with an empty selection list. -->
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/RuleId">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Arbeitszeitplanregel"/>
+                        <PropertyValue Property="CollectionPath" String="WorkScheduleRule"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="RuleId"/>
+                                    <PropertyValue Property="ValueListProperty" String="RuleId"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Description"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="PsGrouping"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="HolidayCalendarId"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="false"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/PsGrouping">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="PS-Gruppierung"/>
+                        <PropertyValue Property="CollectionPath" String="WorkScheduleRule"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="PsGrouping"/>
+                                    <PropertyValue Property="ValueListProperty" String="PsGrouping"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="RuleId"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Description"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/HolidayCalendarId">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Feiertagskalender"/>
+                        <PropertyValue Property="CollectionPath" String="HolidayCalendar"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="HolidayCalendarId"/>
+                                    <PropertyValue Property="ValueListProperty" String="HolidayCalendarId"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Abbreviation"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ValidFromYear"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ValidToYear"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.HolidayCalendarType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="HolidayCalendarId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Abbreviation"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidFromYear"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ValidToYear"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>HolidayCalendarId</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/LocalLastChangedAt">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/LastChangedAt">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.Container/WorkScheduleRule">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record Type="Capabilities.FilterRestrictionsType">
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>LocalLastChangedAt</PropertyPath>
+                                <PropertyPath>LastChangedAt</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WeekPatternType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="WeekNumber"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Monday"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Tuesday"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Wednesday"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Thursday"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Friday"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Saturday"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Sunday"/></Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.DailyWorkScheduleType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Code"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Variant"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="ValidFrom"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="ValidTo"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="TargetHours"/></Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.BreakScheduleType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="BreakId"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="SeqNo"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="StartTime"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="EndTime"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Value" Path="PaidHours"/></Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
