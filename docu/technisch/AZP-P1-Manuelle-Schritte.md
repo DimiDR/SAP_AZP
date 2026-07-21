@@ -1,9 +1,12 @@
 # AZP P1 – Manuelle Schritte in S4P (SE80 / SE91 / SE93 / SE54)
 
-Stand: 2026-07-19 · Paket `ZAZP_HR_TIME` · Transportaufgabe `S4PK913042` (Auftrag `S4PK913041`)
+Stand: 2026-07-20 · Paket `ZAZP_HR_TIME` · Transportaufgabe `S4PK913042` (Auftrag `S4PK913041`)
 
 Per MCP bereits erledigt: Include `ZAZP_SM30_EVENTS` aktiv; FUGR-Hauptprogramm enthält im **inaktiven Entwurf**  
 `INCLUDE zazp_sm30_events.` (Syntax OK). ADT-Aktivierung der FUGR schlägt systemseitig fehl → **in SE80 aktivieren**.
+
+Zusätzlich erledigt (nicht P1-GUI): DCL `pfcg_auth` aktiv; Report `ZAZP_E2E` für P2-Smoke-Tests;  
+`add_message` liest MSAG-Texte (sobald SE91 befüllt).
 
 ---
 
@@ -27,6 +30,9 @@ Per MCP bereits erledigt: Include `ZAZP_SM30_EVENTS` aktiv; FUGR-Hauptprogramm e
 | 020–023 | Pausenplan-Prüfungen |
 | 030–032 | Transport / Löschen |
 | 040–042 | IT0007-Zuordnung |
+| 050–056 | RAP-Saver / Actions (Kopieren, Simulation, Speichern) |
+
+Vollständige Liste: `sap/msag/zazp.msag.json` (34 Texte).
 
 ---
 

@@ -341,10 +341,23 @@ CLASS zcl_zazp_validation IMPLEMENTATION.
 
 
   METHOD add_message.
+    DATA lv_text TYPE string.
+
+    IF msgno IS NOT INITIAL.
+      MESSAGE ID zif_zazp_validation=>c_msgid
+              TYPE severity
+              NUMBER msgno
+              INTO lv_text.
+    ENDIF.
+
+    IF lv_text IS INITIAL.
+      lv_text = text.
+    ENDIF.
+
     APPEND VALUE #(
       severity = severity
       field    = field
-      text     = text
+      text     = lv_text
       msgid    = zif_zazp_validation=>c_msgid
       msgno    = msgno
     ) TO messages.

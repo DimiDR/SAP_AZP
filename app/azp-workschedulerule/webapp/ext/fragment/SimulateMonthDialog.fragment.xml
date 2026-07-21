@@ -1,0 +1,65 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Dialog
+		title="{sim>/title}"
+		contentWidth="56rem"
+		contentHeight="32rem"
+		resizable="true"
+		draggable="true"
+		verticalScrolling="true">
+		<Table
+			items="{sim>/days}"
+			growing="true"
+			growingThreshold="40"
+			sticky="ColumnHeaders"
+			mode="None"
+			width="100%">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="Kalendertage" level="H5"/>
+					<ToolbarSpacer/>
+					<ObjectStatus
+						text="{sim>/summary/monthHours} h"
+						state="Information"
+						title="Monatssumme"/>
+					<ObjectStatus
+						text="{sim>/summary/holidayCount}"
+						state="Warning"
+						title="Feiertage"
+						class="sapUiSmallMarginBegin"/>
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column width="7rem"><Text text="Datum"/></Column>
+				<Column width="4rem" hAlign="End"><Text text="Wo"/></Column>
+				<Column width="4rem" hAlign="End"><Text text="WT"/></Column>
+				<Column width="6rem"><Text text="Tagesplan"/></Column>
+				<Column width="5rem" hAlign="End"><Text text="Soll h"/></Column>
+				<Column width="6rem"><Text text="Typ"/></Column>
+				<Column width="5rem" hAlign="Center"><Text text="FT"/></Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="{sim>CalendarDay}"/>
+						<Text text="{sim>WeekNumber}"/>
+						<Text text="{sim>Weekday}"/>
+						<Text text="{sim>DwsCode}"/>
+						<Text text="{sim>TargetHours}"/>
+						<ObjectStatus
+							text="{sim>DayTypeText}"
+							state="{= ${sim>DayType} === '2' ? 'Warning' : (${sim>DayType} === '0' ? 'None' : 'Success') }"/>
+						<core:Icon
+							src="{= ${sim>IsHoliday} ? 'sap-icon://date-time' : '' }"
+							color="Critical"
+							visible="{sim>IsHoliday}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<beginButton>
+			<Button text="Schließen" type="Emphasized" press=".onCloseSimulateDialog"/>
+		</beginButton>
+	</Dialog>
+</core:FragmentDefinition>

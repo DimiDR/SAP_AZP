@@ -140,7 +140,7 @@ So gilt in **Fiori** dieselbe Einschränkung wie in SAP GUI (SM30) – konsisten
 
 | Punkt | Wo | Anmerkung |
 |---|---|---|
-| Tabellen-Berechtigungsgruppe (`DICBERCLS`) der AZP-Tabellen | `SE54` → Berechtigungsgruppen, bzw. Tabelle `TDDAT` (Feld `CCLASS`) für `T508A/T550A/T550P/T551A` | Für `S_TABU_DIS`. **Live-Auslesung war beim Erstellen nicht verfügbar** – nachziehen. Umgehung: `S_TABU_NAM` (§4.1) |
+| Tabellen-Berechtigungsgruppe (`DICBERCLS`) der AZP-Tabellen | `TDDAT-CCLASS` für `T508A/T550A/T550P/T551A` | **`PC`** (verifiziert 2026-07-20). DCL nutzt `S_TABU_DIS` mit `DICBERCLS = 'PC'` parallel zu `S_TABU_NAM`. |
 | Service-Hash `S_TABU`/`S_SERVICE` | `SU24`/`/IWFND/MAINT_SERVICE` bzw. Service-Binding | nach Aktivierung des OData-Service |
 | Personalbereiche/-gruppen für `P_ORGIN` | HR-Organisation | nach Zuständigkeit der AZP-Pflege |
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mc:messageClass xmlns:mc="http://www.sap.com/adt/MessageClass" xmlns:adtcore="http://www.sap.com/adt/core" adtcore:name="ZAZP" adtcore:type="MSAG/N" adtcore:description="AZP Validierungs- und Meldungstexte" adtcore:language="DE" adtcore:masterLanguage="DE">
+  <adtcore:packageRef adtcore:name="ZAZP_HR_TIME"/>
+  <mc:messages mc:msgno="000" mc:msgtext="&amp;1&amp;2&amp;3&amp;4" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="001" mc:msgtext="Arbeitszeitplanregel (SCHKZ) ist leer" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="002" mc:msgtext="Arbeitszeitplanregel &amp;1 nicht gefunden" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="003" mc:msgtext="Gueltig-ab muss kleiner/gleich Gueltig-bis sein" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="004" mc:msgtext="Durchschnittswochenstunden ausserhalb Bereich" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="005" mc:msgtext="Periodenarbeitszeitplan &amp;1 nicht gefunden" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="006" mc:msgtext="Tagesplan &amp;1 existiert nicht" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="007" mc:msgtext="Wochensumme weicht von Ø-Wochenwert ab" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="010" mc:msgtext="Tagesplan-Code (TPROG) ist leer" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="011" mc:msgtext="Tagesplan hat 0 Sollstunden (Frei-Tag)" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="012" mc:msgtext="Arbeitsbeginn muss vor Arbeitsende liegen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="013" mc:msgtext="Kernzeitbeginn muss vor Kernzeitende liegen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="014" mc:msgtext="Kernzeit muss innerhalb des Sollrahmens liegen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="015" mc:msgtext="Kernzeit muss innerhalb der Normalzeit liegen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="016" mc:msgtext="Normalzeit muss innerhalb des Sollrahmens liegen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="017" mc:msgtext="Anfangstoleranz liegt ausserhalb des Sollrahmens" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="018" mc:msgtext="Sollstunden nicht plausibel zu Rahmen/Pausen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="020" mc:msgtext="Pausenplan (PAMOD) ist leer" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="021" mc:msgtext="Pausenbeginn muss vor Pausenende liegen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="022" mc:msgtext="Pause liegt ausserhalb des Arbeitszeitrahmens" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="023" mc:msgtext="Pausenplan &amp;1 existiert nicht" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="030" mc:msgtext="Gueltiger offener Customizing-Auftrag erforderlich" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="031" mc:msgtext="Loeschung erfordert vollstaendigen T508A-Schluessel" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="032" mc:msgtext="Kein T508A-Satz zum Loeschen gefunden" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="040" mc:msgtext="Personalnummer und AZP-Regel sind Pflicht" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="041" mc:msgtext="HR_MAINTAIN_MASTERDATA fehlgeschlagen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="042" mc:msgtext="IT0007 Zuordnung erfolgreich" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="050" mc:msgtext="Kein offener Customizing-Auftrag verfuegbar" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="051" mc:msgtext="Neue Regel-ID ist Pflicht" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="052" mc:msgtext="Kopieren/Transport fehlgeschlagen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="053" mc:msgtext="Jahr und Monat sind Pflicht" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="054" mc:msgtext="Keine Simulationstage ermittelt" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="055" mc:msgtext="Speichern/Transport fehlgeschlagen" mc:selfexplainatory="true" mc:documented="false"/>
+  <mc:messages mc:msgno="056" mc:msgtext="Loeschen/Transport fehlgeschlagen" mc:selfexplainatory="true" mc:documented="false"/>
+</mc:messageClass>

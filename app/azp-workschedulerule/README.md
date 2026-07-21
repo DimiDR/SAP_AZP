@@ -40,6 +40,8 @@ Mockdaten liegen unter `webapp/localService/mainService/data/` (Beispiele GLZ38,
 
 Service Binding `ZUI_ZAZP_RULE_UI` ist via `/IWFND/V4_ADMIN` published. RAP unterstützt Draft-Create/Edit sowie Actions `copyAsTemplate` und `simulateMonth`.
 
+**Monat simulieren:** Regel markieren → Button → Jahr/Monat eingeben → Ergebnisdialog mit Kalendertagen (Tagesplan, Sollstunden, Feiertage). Die Anzeige steckt in `webapp/ext/` (Fiori Elements zeigt Action-Ergebnisse sonst nicht).
+
 **Korrekte OData-URL** (in `webapp/manifest.json`):
 
 ```text

@@ -7,6 +7,7 @@ define view entity ZI_ZAZP_HolidayCalendar
       @Search.defaultSearchElement: true
       @ObjectModel.text.element: [ 'Abbreviation' ]
   key thoci.ident as HolidayCalendarId,
+      @Search.defaultSearchElement: true
       @EndUserText.label: 'Abbreviation'
       thoci.abbr  as Abbreviation,
       thoci.vjahr as ValidFromYear,

@@ -8,10 +8,13 @@ define root view entity ZC_ZAZP_WorkScheduleRule
 {
   key EsGrouping,
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_ZAZP_HolidayCalendar', element: 'HolidayCalendarId' } }]
+      @Search.defaultSearchElement: true
   key HolidayCalendarId,
-      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZC_ZAZP_WorkScheduleRule', element: 'PsGrouping' } }]
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZC_ZAZP_WorkScheduleRule', element: 'PsGrouping' }, distinctValues: true }]
+      @Search.defaultSearchElement: true
   key PsGrouping,
-      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZC_ZAZP_WorkScheduleRule', element: 'RuleId' } }]
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZC_ZAZP_WorkScheduleRule', element: 'RuleId' }, distinctValues: true }]
+      @Search.defaultSearchElement: true
   key RuleId,
   key ValidTo,
       @Search.defaultSearchElement: true

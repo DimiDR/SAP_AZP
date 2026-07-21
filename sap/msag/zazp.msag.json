@@ -31,6 +31,13 @@
     { "number": "032", "text": "Kein T508A-Satz zum Loeschen gefunden" },
     { "number": "040", "text": "Personalnummer und AZP-Regel sind Pflicht" },
     { "number": "041", "text": "HR_MAINTAIN_MASTERDATA fehlgeschlagen" },
-    { "number": "042", "text": "IT0007 Zuordnung erfolgreich" }
+    { "number": "042", "text": "IT0007 Zuordnung erfolgreich" },
+    { "number": "050", "text": "Kein offener Customizing-Auftrag verfuegbar" },
+    { "number": "051", "text": "Neue Regel-ID ist Pflicht" },
+    { "number": "052", "text": "Kopieren/Transport fehlgeschlagen" },
+    { "number": "053", "text": "Jahr und Monat sind Pflicht" },
+    { "number": "054", "text": "Keine Simulationstage ermittelt" },
+    { "number": "055", "text": "Speichern/Transport fehlgeschlagen" },
+    { "number": "056", "text": "Loeschen/Transport fehlgeschlagen" }
   ]
 }

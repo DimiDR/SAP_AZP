@@ -5,6 +5,11 @@
   INCLUDE lzazp_sm30uxx.                     " Function Modules
 
 *******************************************************************
-*   User-defined Include-files                                    *
+*   User-defined Include-files (if necessary).                    *
 *******************************************************************
-  INCLUDE zazp_sm30_events.                  " SM30 Event Form-Routinen
+* INCLUDE LZAZP_SM30F...                     " Subroutines
+* INCLUDE LZAZP_SM30O...                     " PBO-Modules
+* INCLUDE LZAZP_SM30I...                     " PAI-Modules
+* INCLUDE LZAZP_SM30E...                     " Events
+* INCLUDE LZAZP_SM30P...                     " Local class implement.
+* INCLUDE LZAZP_SM30T99.                     " ABAP Unit tests

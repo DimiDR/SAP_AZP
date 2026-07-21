@@ -4,6 +4,14 @@ Werkzeug zum **Modellieren, Validieren und Pflegen von Arbeitszeitplänen (AZP)*
 (S/4HANA, Modul PT – Personalzeitwirtschaft). Die Logik liegt in ABAP; **SAP GUI** und die
 optionale **Fiori-Oberfläche** nutzen denselben Code.
 
+**List Report** – Übersicht und Filter der Arbeitszeitplanregeln (Kopieren, Monat simulieren, Anlegen):
+
+![Fiori List Report – Arbeitszeitpläne](docu/main.png)
+
+**Object Page** – Detail einer Regel mit Allgemein, Wochenmuster, Tagesplänen und Pausen:
+
+![Fiori Object Page – Arbeitszeitplan-Detail](docu/detailed.png)
+
 | | |
 |---|---|
 | **Transaktion** | `ZAZP01` |
@@ -79,28 +87,16 @@ Scratch-Ordner `tmp/` / `tmp_abap/` werden **nicht** mehr benötigt und sind ent
 
 ---
 
-## Initiale Einstellung (Git & lokale Entwicklung)
+## Initiale Einstellung (lokale Entwicklung)
 
-### 1. Repository klonen / initialisieren
-
-```bash
-# Falls noch kein Git-Repo:
-git init
-git add .
-git status   # prüfen: keine .env, keine node_modules, keine Klartext-Passwörter
-git commit -m "Initial commit: AZP UI + ABAP-Spiegel + Doku"
-```
-
-Voraussetzungen: **Node.js LTS** und npm ([nodejs.org](https://nodejs.org)).
-
-### 2. Fiori-App installieren
+### 1. Fiori-App installieren
 
 ```bash
 cd app/azp-workschedulerule
 npm install
 ```
 
-### 3. Backend-Zugang (nur für Live-System, nicht für Mock)
+### 2. Backend-Zugang (nur für Live-System, nicht für Mock)
 
 Credentials gehören **nicht** ins Git. Die lokalen Run-Configs sind gitignored; im Repo liegen nur die Vorlagen `*.example`:
 
@@ -123,7 +119,7 @@ Für Deploy-Szenarien siehe SAP-Doku zu `credentials` mit `env:…` und optional
 
 Backend-URL und Client stehen in den YAML-Vorlagen (S4P-Lab). Bei anderem System nur URL/Client anpassen.
 
-### 4. App starten
+### 3. App starten
 
 ```bash
 cd app/azp-workschedulerule
@@ -134,7 +130,7 @@ npm start             # Live-OData über Proxy (Credentials nötig)
 
 FLP-Sandbox-Intent: `azpworkschedulerule-tile`.
 
-### 5. Optional: App neu generieren
+### 4. Optional: App neu generieren
 
 Nur nötig, wenn das OData-Modell (EDMX) sich stark ändert und die App neu gescaffoldet werden soll:
 
@@ -177,14 +173,6 @@ Danach ggf. lokale Anpassungen (Annotations, Mockdaten) erneut prüfen. Für den
 ## Fiori-App (Kurzreferenz)
 
 Details und Setup: Abschnitt **Initiale Einstellung** oben; App-README: [`app/azp-workschedulerule/README.md`](app/azp-workschedulerule/README.md).
-
-**List Report** – Übersicht und Filter der Arbeitszeitplanregeln (Kopieren, Monat simulieren, Anlegen):
-
-![Fiori List Report – Arbeitszeitpläne](docu/main.png)
-
-**Object Page** – Detail einer Regel mit Allgemein, Wochenmuster, Tagesplänen und Pausen:
-
-![Fiori Object Page – Arbeitszeitplan-Detail](docu/detailed.png)
 
 OData-URL (Binding `ZUI_ZAZP_RULE_UI`):
 

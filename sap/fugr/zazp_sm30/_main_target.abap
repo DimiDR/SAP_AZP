@@ -7,4 +7,4 @@
 *******************************************************************
 *   User-defined Include-files                                    *
 *******************************************************************
-  INCLUDE zazp_sm30_events.                  " SM30 Event Form-Routinen
+  INCLUDE lzazp_sm30f01.                     " SM30 Event Form-Routinen

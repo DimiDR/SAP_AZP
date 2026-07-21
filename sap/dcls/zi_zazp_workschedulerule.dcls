@@ -1,5 +1,7 @@
 @EndUserText.label: 'AZP Access Control WorkScheduleRule'
 @MappingRole: true
 define role ZI_ZAZP_WorkScheduleRule {
-  grant select on ZI_ZAZP_WorkScheduleRule;
+  grant select on ZI_ZAZP_WorkScheduleRule
+    where ( ) = aspect pfcg_auth ( S_TABU_NAM, ACTVT = '03', TABLE = 'T508A' )
+       or ( ) = aspect pfcg_auth ( S_TABU_DIS, ACTVT = '03', DICBERCLS = 'PC' );
 }

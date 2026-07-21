@@ -1,5 +1,7 @@
 @EndUserText.label: 'AZP Access Control BreakSchedule'
 @MappingRole: true
 define role ZI_ZAZP_BreakSchedule {
-  grant select on ZI_ZAZP_BreakSchedule;
+  grant select on ZI_ZAZP_BreakSchedule
+    where ( ) = aspect pfcg_auth ( S_TABU_NAM, ACTVT = '03', TABLE = 'T550P' )
+       or ( ) = aspect pfcg_auth ( S_TABU_DIS, ACTVT = '03', DICBERCLS = 'PC' );
 }

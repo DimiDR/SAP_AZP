@@ -46,10 +46,6 @@
                             <PropertyValue Property="Label" String="Kopieren"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.copyAsTemplate"/>
                         </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="Monat simulieren"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.simulateMonth"/>
-                        </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="RuleId"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
@@ -80,10 +76,6 @@
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="Kopieren"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.copyAsTemplate"/>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="Monat simulieren"/>
-                            <PropertyValue Property="Action" String="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.simulateMonth"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="RuleId"/>
@@ -162,11 +154,14 @@
             </Annotations>
 
             <!-- Filter value helps: without Common.ValueList, FE opens only
-                 "Define Conditions" with an empty selection list. -->
+                 "Define Conditions" with an empty selection list.
+                 HolidayCalendar is non-draft. RuleId/PsGrouping reuse the draft
+                 root — must pin IsActiveEntity=true or the VH request fails. -->
             <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/RuleId">
+                <Annotation Term="Common.Label" String="AZP-ID"/>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
-                        <PropertyValue Property="Label" String="Arbeitszeitplanregel"/>
+                        <PropertyValue Property="Label" String="AZP-ID"/>
                         <PropertyValue Property="CollectionPath" String="WorkScheduleRule"/>
                         <PropertyValue Property="SearchSupported" Bool="true"/>
                         <PropertyValue Property="Parameters">
@@ -184,6 +179,10 @@
                                 <Record Type="Common.ValueListParameterDisplayOnly">
                                     <PropertyValue Property="ValueListProperty" String="HolidayCalendarId"/>
                                 </Record>
+                                <Record Type="Common.ValueListParameterConstant">
+                                    <PropertyValue Property="ValueListProperty" String="IsActiveEntity"/>
+                                    <PropertyValue Property="Constant" Bool="true"/>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -191,6 +190,7 @@
                 <Annotation Term="Common.ValueListWithFixedValues" Bool="false"/>
             </Annotations>
             <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/PsGrouping">
+                <Annotation Term="Common.Label" String="PS-Gruppierung"/>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label" String="PS-Gruppierung"/>
@@ -207,6 +207,10 @@
                                 </Record>
                                 <Record Type="Common.ValueListParameterDisplayOnly">
                                     <PropertyValue Property="ValueListProperty" String="Description"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterConstant">
+                                    <PropertyValue Property="ValueListProperty" String="IsActiveEntity"/>
+                                    <PropertyValue Property="Constant" Bool="true"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -274,6 +278,11 @@
                 <Annotation Term="UI.HiddenFilter" Bool="true"/>
             </Annotations>
             <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.Container/WorkScheduleRule">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable" Bool="true"/>
+                    </Record>
+                </Annotation>
                 <Annotation Term="Capabilities.FilterRestrictions">
                     <Record Type="Capabilities.FilterRestrictionsType">
                         <PropertyValue Property="NonFilterableProperties">

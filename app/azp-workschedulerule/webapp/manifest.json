@@ -129,6 +129,7 @@
               "contextPath": "/WorkScheduleRule",
               "variantManagement": "Page",
               "initialLoad": "Enabled",
+              "liveMode": true,
               "navigation": {
                 "WorkScheduleRule": {
                   "detail": {
@@ -137,9 +138,22 @@
                 }
               },
               "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.SelectionFields": {
+                  "showClearButton": true,
+                  "liveMode": true
+                },
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "SimulateMonthUI": {
+                      "press": "azpworkschedulerule.ext.lib.SimulateMonth.onPress",
+                      "text": "Monatssimulation anzeigen",
+                      "requiresSelection": true,
+                      "enabled": true,
+                      "visible": true
+                    }
                   }
                 }
               }
@@ -153,7 +167,19 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/WorkScheduleRule"
+              "contextPath": "/WorkScheduleRule",
+              "content": {
+                "header": {
+                  "actions": {
+                    "SimulateMonthUI": {
+                      "press": "azpworkschedulerule.ext.lib.SimulateMonth.onPress",
+                      "text": "Monatssimulation anzeigen",
+                      "enabled": true,
+                      "visible": true
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -166,7 +192,7 @@
   },
   "sap.fe": {
     "app": {
-      "enableLazyLoading": true
+      "enableLazyLoading": false
     }
   }
 }
