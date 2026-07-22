@@ -56,8 +56,23 @@ CLASS zcl_zazp_transport DEFINITION
       RETURNING
         VALUE(ok) TYPE abap_bool.
 
+    CLASS-METHODS set_preferred_request
+      IMPORTING
+        trkorr TYPE e070-trkorr.
+
+    CLASS-METHODS get_preferred_request
+      RETURNING
+        VALUE(trkorr) TYPE e070-trkorr.
+
+    CLASS-METHODS clear_preferred_request.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
+    CLASS-DATA gv_preferred_trkorr TYPE e070-trkorr.
+
+    CLASS-METHODS _pref_id
+      RETURNING
+        VALUE(id) TYPE indx_srtfd.
 ENDCLASS.
 
 
@@ -115,6 +130,13 @@ CLASS zcl_zazp_transport IMPLEMENTATION.
     IF preferred_trkorr IS NOT INITIAL
        AND is_request_modifiable( preferred_trkorr ) = abap_true.
       trkorr = preferred_trkorr.
+      RETURN.
+    ENDIF.
+
+    DATA(lv_pref) = get_preferred_request( ).
+    IF lv_pref IS NOT INITIAL
+       AND is_request_modifiable( lv_pref ) = abap_true.
+      trkorr = lv_pref.
       RETURN.
     ENDIF.
 
@@ -197,6 +219,45 @@ CLASS zcl_zazp_transport IMPLEMENTATION.
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE cx_sy_file_io.
     ENDIF.
+  ENDMETHOD.
+
+
+  METHOD set_preferred_request.
+    DATA: lv_trkorr TYPE e070-trkorr,
+          lv_id     TYPE indx_srtfd.
+    gv_preferred_trkorr = trkorr.
+    lv_trkorr = trkorr.
+    lv_id = _pref_id( ).
+    EXPORT trkorr FROM lv_trkorr TO DATABASE indx(za) ID lv_id.
+  ENDMETHOD.
+
+
+  METHOD get_preferred_request.
+    DATA: lv_trkorr TYPE e070-trkorr,
+          lv_id     TYPE indx_srtfd.
+    IF gv_preferred_trkorr IS NOT INITIAL.
+      trkorr = gv_preferred_trkorr.
+      RETURN.
+    ENDIF.
+    lv_id = _pref_id( ).
+    IMPORT trkorr TO lv_trkorr FROM DATABASE indx(za) ID lv_id.
+    IF sy-subrc = 0.
+      gv_preferred_trkorr = lv_trkorr.
+      trkorr = lv_trkorr.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD clear_preferred_request.
+    DATA lv_id TYPE indx_srtfd.
+    CLEAR gv_preferred_trkorr.
+    lv_id = _pref_id( ).
+    DELETE FROM DATABASE indx(za) ID lv_id.
+  ENDMETHOD.
+
+
+  METHOD _pref_id.
+    id = |ZAZP{ sy-uname }|.
   ENDMETHOD.
 
 ENDCLASS.

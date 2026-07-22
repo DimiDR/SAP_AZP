@@ -21,6 +21,14 @@ CLASS lhc_rule DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS simulatemonth FOR MODIFY
       IMPORTING keys FOR ACTION rule~simulatemonth
       RESULT result.
+    METHODS createtransportrequest FOR MODIFY
+      IMPORTING keys FOR ACTION rule~createtransportrequest
+      RESULT result.
+    METHODS setpreferredtransport FOR MODIFY
+      IMPORTING keys FOR ACTION rule~setpreferredtransport.
+    METHODS listtransportrequests FOR MODIFY
+      IMPORTING keys FOR ACTION rule~listtransportrequests
+      RESULT result.
 ENDCLASS.
 
 CLASS lhc_rule IMPLEMENTATION.
@@ -287,7 +295,8 @@ CLASS lhc_rule IMPLEMENTATION.
 
     TRY.
         lv_trkorr = lo_tr->ensure_customizing_request(
-          description = 'AZP Copy Work Schedule' ).
+          description      = 'AZP Copy Work Schedule'
+          preferred_trkorr = zcl_zazp_transport=>get_preferred_request( ) ).
       CATCH cx_sy_file_io.
         LOOP AT keys INTO DATA(ls_fail).
           APPEND VALUE #( %tky = ls_fail-%tky ) TO failed-rule.
@@ -506,6 +515,104 @@ CLASS lhc_rule IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
+  METHOD createtransportrequest.
+    DATA lo_tr TYPE REF TO zcl_zazp_transport.
+    DATA lv_trkorr TYPE e070-trkorr.
+    DATA lv_text TYPE e07t-as4text.
+
+    lo_tr = NEW #( ).
+
+    LOOP AT keys INTO DATA(ls_key).
+      lv_text = ls_key-%param-transportdescription.
+      IF lv_text IS INITIAL.
+        lv_text = 'AZP Customizing'.
+      ENDIF.
+
+      TRY.
+          lv_trkorr = lo_tr->create_customizing_request( lv_text ).
+          zcl_zazp_transport=>set_preferred_request( lv_trkorr ).
+          APPEND VALUE #(
+            %cid   = ls_key-%cid
+            %param = VALUE #(
+              transportrequest     = lv_trkorr
+              transportdescription = lv_text
+              transportowner       = sy-uname )
+          ) TO result.
+          APPEND VALUE #(
+            %cid = ls_key-%cid
+            %msg = new_message_with_text(
+                     severity = if_abap_behv_message=>severity-success
+                     text     = |Transportauftrag { lv_trkorr } angelegt| )
+          ) TO reported-rule.
+        CATCH cx_sy_file_io.
+          APPEND VALUE #( %cid = ls_key-%cid ) TO failed-rule.
+          APPEND VALUE #(
+            %cid = ls_key-%cid
+            %msg = new_message_with_text(
+                     severity = if_abap_behv_message=>severity-error
+                     text     = 'Transportauftrag konnte nicht angelegt werden' )
+          ) TO reported-rule.
+      ENDTRY.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD setpreferredtransport.
+    DATA lo_tr TYPE REF TO zcl_zazp_transport.
+    DATA lv_trkorr TYPE e070-trkorr.
+
+    lo_tr = NEW #( ).
+
+    LOOP AT keys INTO DATA(ls_key).
+      lv_trkorr = ls_key-%param-transportrequest.
+      IF lv_trkorr IS INITIAL OR lo_tr->is_request_modifiable( lv_trkorr ) = abap_false.
+        APPEND VALUE #( %cid = ls_key-%cid ) TO failed-rule.
+        APPEND VALUE #(
+          %cid = ls_key-%cid
+          %msg = new_message_with_text(
+                   severity = if_abap_behv_message=>severity-error
+                   text     = 'Gueltiger offener Customizing-Auftrag erforderlich' )
+        ) TO reported-rule.
+        CONTINUE.
+      ENDIF.
+
+      zcl_zazp_transport=>set_preferred_request( lv_trkorr ).
+      APPEND VALUE #(
+        %cid = ls_key-%cid
+        %msg = new_message_with_text(
+                 severity = if_abap_behv_message=>severity-success
+                 text     = |Transportauftrag { lv_trkorr } ausgewaehlt| )
+      ) TO reported-rule.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD listtransportrequests.
+    DATA lo_tr TYPE REF TO zcl_zazp_transport.
+    DATA lt_req TYPE zcl_zazp_transport=>ty_requests.
+
+    lo_tr = NEW #( ).
+    lt_req = lo_tr->list_open_customizing_requests( ).
+
+    LOOP AT keys INTO DATA(ls_key).
+      LOOP AT lt_req INTO DATA(ls_req).
+        APPEND VALUE #(
+          %cid   = ls_key-%cid
+          %param = VALUE #(
+            transportrequest     = ls_req-trkorr
+            transportdescription = ls_req-as4text
+            transportowner       = ls_req-as4user )
+        ) TO result.
+      ENDLOOP.
+      IF lt_req IS INITIAL.
+        APPEND VALUE #(
+          %cid = ls_key-%cid
+          %msg = new_message_with_text(
+                   severity = if_abap_behv_message=>severity-information
+                   text     = 'Keine offenen Customizing-Auftraege' )
+        ) TO reported-rule.
+      ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
+
 ENDCLASS.
 
 CLASS lhc_week DEFINITION INHERITING FROM cl_abap_behavior_handler.
@@ -640,7 +747,8 @@ CLASS lsc_zi_zazp_workschedulerule IMPLEMENTATION.
 
     TRY.
         lv_trkorr = lo_tr->ensure_customizing_request(
-          description = 'AZP Work Schedule Customizing' ).
+          description      = 'AZP Work Schedule Customizing'
+          preferred_trkorr = zcl_zazp_transport=>get_preferred_request( ) ).
       CATCH cx_sy_file_io.
         lv_transport_ok = abap_false.
     ENDTRY.

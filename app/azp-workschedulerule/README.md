@@ -42,6 +42,8 @@ Service Binding `ZUI_ZAZP_RULE_UI` ist via `/IWFND/V4_ADMIN` published. RAP unte
 
 **Monat simulieren:** Regel markieren → Button → Jahr/Monat eingeben → Ergebnisdialog mit Kalendertagen (Tagesplan, Sollstunden, Feiertage). Die Anzeige steckt in `webapp/ext/` (Fiori Elements zeigt Action-Ergebnisse sonst nicht).
 
+**Transportauftrag:** Button *Transportauftrag* (List/Object Page) oder automatisch vor *Aktivieren* (`onBeforeSave`). Dialog: vorhandenen offenen Customizing-Auftrag wählen oder neuen anlegen. Speichern zeichnet TABU-Keys auf dem gewählten Auftrag auf.
+
 **Korrekte OData-URL** (in `webapp/manifest.json`):
 
 ```text
@@ -52,7 +54,7 @@ Fallback (ebenfalls published): `…/zui_zazp_rule_o4/…`. Details: `docu/techn
 
 `ui5.yaml` Backend-URL auf das System zeigen und `npm start` nutzen.
 
-**Anlegen live:** List Report → Anlegen → Schlüssel + Periodenfelder → Facetten **Wochenmuster / Tagespläne / Pausen** befüllen → Aktivieren (schreibt `T508A`/`T551A`/`T550A`/`T550P` inkl. Transport).
+**Anlegen live:** List Report → Anlegen → Schlüssel + Periodenfelder → Facetten **Wochenmuster / Tagespläne / Pausen** befüllen → Aktivieren (fragt Transportauftrag ab, schreibt `T508A`/`T551A`/`T550A`/`T550P` inkl. Transport).
 
 ### Neu generieren (optional)
 

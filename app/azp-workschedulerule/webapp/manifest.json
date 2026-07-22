@@ -105,6 +105,15 @@
     "resources": {
       "css": []
     },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#azpworkschedulerule::WorkScheduleRuleObjectPage": {
+            "controllerName": "azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage"
+          }
+        }
+      }
+    },
     "routing": {
       "config": {},
       "routes": [
@@ -153,6 +162,13 @@
                       "requiresSelection": true,
                       "enabled": true,
                       "visible": true
+                    },
+                    "SelectTransportUI": {
+                      "press": "azpworkschedulerule.ext.lib.Transport.onPress",
+                      "text": "{i18n>transportAction}",
+                      "requiresSelection": false,
+                      "enabled": true,
+                      "visible": true
                     }
                   }
                 }
@@ -174,6 +190,12 @@
                     "SimulateMonthUI": {
                       "press": "azpworkschedulerule.ext.lib.SimulateMonth.onPress",
                       "text": "Monatssimulation anzeigen",
+                      "enabled": true,
+                      "visible": true
+                    },
+                    "SelectTransportUI": {
+                      "press": "azpworkschedulerule.ext.lib.Transport.onPress",
+                      "text": "{i18n>transportAction}",
                       "enabled": true,
                       "visible": true
                     }

@@ -39,6 +39,16 @@ authorization master ( instance, global )
     parameter ZA_ZAZP_MonthParams
     result [0..*] ZI_ZAZP_SimDay;
 
+  static action listTransportRequests
+    result [0..*] ZI_ZAZP_SimDay;
+
+  static action createTransportRequest
+    parameter ZA_ZAZP_MonthParams
+    result [1] ZI_ZAZP_SimDay;
+
+  static action setPreferredTransport
+    parameter ZA_ZAZP_MonthParams;
+
   association _Weeks { create; with draft; }
   association _DailySchedules { create; with draft; }
   association _BreakSchedules { create; with draft; }

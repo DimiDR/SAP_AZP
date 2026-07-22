@@ -17,6 +17,9 @@ use etag
 
   use action copyAsTemplate;
   use action simulateMonth;
+  use action listTransportRequests;
+  use action createTransportRequest;
+  use action setPreferredTransport;
 
   use association _Weeks { create; with draft; }
   use association _DailySchedules { create; with draft; }

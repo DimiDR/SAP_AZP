@@ -1,0 +1,74 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog
+		title="{i18n>transportDialogTitle}"
+		contentWidth="28rem"
+		resizable="true"
+		draggable="true"
+		busy="{tr>/busy}">
+		<content>
+			<f:SimpleForm
+				editable="true"
+				layout="ColumnLayout"
+				columnsM="1"
+				columnsL="1"
+				columnsXL="1"
+				class="sapUiSmallMargin">
+				<f:content>
+					<Label text="{i18n>transportMode}"/>
+					<RadioButtonGroup
+						id="trModeGroup"
+						columns="1"
+						selectedIndex="{tr>/modeIndex}"
+						select=".onModeChange">
+						<RadioButton text="{i18n>transportModeExisting}"/>
+						<RadioButton text="{i18n>transportModeCreate}"/>
+					</RadioButtonGroup>
+
+					<Label
+						text="{i18n>transportRequest}"
+						visible="{= ${tr>/modeIndex} === 0 }"/>
+					<Select
+						id="trRequestSelect"
+						width="100%"
+						visible="{= ${tr>/modeIndex} === 0 }"
+						forceSelection="false"
+						selectedKey="{tr>/selectedTrkorr}"
+						items="{tr>/requests}">
+						<core:Item
+							key="{tr>TransportRequest}"
+							text="{tr>TransportRequest} – {tr>Description}"/>
+					</Select>
+					<Text
+						text="{i18n>transportNoOpenRequests}"
+						visible="{= ${tr>/modeIndex} === 0 &amp;&amp; ${tr>/requests}.length === 0 }"
+						class="sapUiTinyMarginTop"/>
+
+					<Label
+						text="{i18n>transportDescription}"
+						visible="{= ${tr>/modeIndex} === 1 }"/>
+					<Input
+						id="trDescription"
+						visible="{= ${tr>/modeIndex} === 1 }"
+						value="{tr>/newDescription}"
+						maxLength="60"
+						width="100%"
+						placeholder="{i18n>transportDescriptionPlaceholder}"/>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button
+				text="{i18n>transportConfirm}"
+				type="Emphasized"
+				press=".onConfirmTransport"/>
+		</beginButton>
+		<endButton>
+			<Button
+				text="{i18n>transportCancel}"
+				press=".onCancelTransport"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
