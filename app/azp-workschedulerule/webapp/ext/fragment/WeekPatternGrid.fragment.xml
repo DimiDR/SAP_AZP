@@ -1,0 +1,150 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin azpWeekGrid" busy="{weekGrid>/busy}">
+		<HBox alignItems="Center" class="sapUiTinyMarginBottom" wrap="Wrap">
+			<Title text="{i18n>weekGridTitle}" level="H5" class="sapUiTinyMarginEnd"/>
+			<ObjectStatus
+				class="sapUiTinyMarginEnd"
+				title="{i18n>weekGridAvg}"
+				text="{weekGrid>/avgWeekHours} h"
+				state="Information"/>
+			<ObjectStatus
+				title="{i18n>weekGridWeeks}"
+				text="{weekGrid>/weekCount}"
+				state="None"/>
+		</HBox>
+		<Table
+			items="{weekGrid>/rows}"
+			mode="None"
+			sticky="ColumnHeaders"
+			width="100%"
+			noDataText="{i18n>weekGridEmpty}">
+			<columns>
+				<Column width="4.5rem" hAlign="Center"><Text text="Wo"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="Mo"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="Di"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="Mi"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="Do"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="Fr"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="Sa"/></Column>
+				<Column minWidth="6rem" hAlign="Center"><Text text="So"/></Column>
+				<Column width="5.5rem" hAlign="End"><Text text="Σ h"/></Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<ObjectIdentifier title="{weekGrid>WeekNumber}"/>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Monday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Monday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>MondayHours}" state="None"/>
+						</VBox>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Tuesday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Tuesday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>TuesdayHours}" state="None"/>
+						</VBox>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Wednesday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Wednesday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>WednesdayHours}" state="None"/>
+						</VBox>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Thursday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Thursday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>ThursdayHours}" state="None"/>
+						</VBox>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Friday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Friday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>FridayHours}" state="None"/>
+						</VBox>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Saturday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Saturday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>SaturdayHours}" state="None"/>
+						</VBox>
+						<VBox alignItems="Center" class="azpDayCell">
+							<Input
+								value="{weekGrid>Sunday}"
+								editable="{weekGrid>/editable}"
+								width="4.5rem"
+								textAlign="Center"
+								change="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onWeekDayChange">
+								<customData>
+									<core:CustomData key="day" value="Sunday" writeToDom="true"/>
+									<core:CustomData key="week" value="{weekGrid>WeekNumber}" writeToDom="true"/>
+								</customData>
+							</Input>
+							<ObjectStatus text="{weekGrid>SundayHours}" state="None"/>
+						</VBox>
+						<ObjectStatus
+							text="{weekGrid>WeekSum}"
+							state="{weekGrid>SumState}"
+							class="sapUiTinyMarginTop"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<MessageStrip
+			text="{i18n>weekGridHint}"
+			type="Information"
+			showIcon="true"
+			class="sapUiTinyMarginTop"/>
+	</VBox>
+</core:FragmentDefinition>

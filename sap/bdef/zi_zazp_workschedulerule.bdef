@@ -12,7 +12,7 @@ authorization master ( instance, global )
   update;
   delete;
 
-  field ( readonly ) Description, LastChangedAt, LocalLastChangedAt;
+  field ( readonly ) Description, Status, StatusCriticality, LastChangedAt, LocalLastChangedAt;
   field ( readonly : update ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, ValidTo;
   field ( mandatory : create ) EsGrouping, HolidayCalendarId, PsGrouping, RuleId, ValidTo, ValidFrom, DwsGrouping, PeriodId;
 
@@ -36,18 +36,26 @@ authorization master ( instance, global )
     result [1] $self;
 
   action simulateMonth
-    parameter ZA_ZAZP_MonthParams
+    parameter ZA_ZAZP_SimParams
     result [0..*] ZI_ZAZP_SimDay;
 
   static action listTransportRequests
     result [0..*] ZI_ZAZP_SimDay;
 
   static action createTransportRequest
-    parameter ZA_ZAZP_MonthParams
+    parameter ZA_ZAZP_TransportParams
     result [1] ZI_ZAZP_SimDay;
 
   static action setPreferredTransport
-    parameter ZA_ZAZP_MonthParams;
+    parameter ZA_ZAZP_TransportParams;
+
+  static action readEmployeeAssignment
+    parameter ZA_ZAZP_MonthParams
+    result [1] ZI_ZAZP_SimDay;
+
+  static action assignEmployee
+    parameter ZA_ZAZP_MonthParams
+    result [1] ZI_ZAZP_SimDay;
 
   association _Weeks { create; with draft; }
   association _DailySchedules { create; with draft; }

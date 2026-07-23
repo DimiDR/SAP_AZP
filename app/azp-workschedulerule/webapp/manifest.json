@@ -103,7 +103,11 @@
       }
     },
     "resources": {
-      "css": []
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
     },
     "extends": {
       "extensions": {
@@ -126,6 +130,11 @@
           "pattern": "WorkScheduleRule({key}):?query:",
           "name": "WorkScheduleRuleObjectPage",
           "target": "WorkScheduleRuleObjectPage"
+        },
+        {
+          "pattern": "Assignment:?query:",
+          "name": "AssignmentPage",
+          "target": "AssignmentPage"
         }
       ],
       "targets": {
@@ -153,12 +162,26 @@
                 },
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable"
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Multi"
+                  },
+                  "columns": {
+                    "StatusColumn": {
+                      "header": "{i18n>statusLabel}",
+                      "template": "azpworkschedulerule.ext.fragment.StatusColumn",
+                      "importance": "High",
+                      "width": "7rem",
+                      "availability": "Default",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "DataField::AvgWeekHours"
+                      }
+                    }
                   },
                   "actions": {
                     "SimulateMonthUI": {
                       "press": "azpworkschedulerule.ext.lib.SimulateMonth.onPress",
-                      "text": "Monatssimulation anzeigen",
+                      "text": "{i18n>simulateMonthAction}",
                       "requiresSelection": true,
                       "enabled": true,
                       "visible": true
@@ -169,10 +192,35 @@
                       "requiresSelection": false,
                       "enabled": true,
                       "visible": true
+                    },
+                    "MassValidateUI": {
+                      "press": "azpworkschedulerule.ext.lib.Validation.onMassValidatePress",
+                      "text": "{i18n>valActionValidate}",
+                      "requiresSelection": true,
+                      "enabled": true,
+                      "visible": true
+                    },
+					"AssignEmployeeUI": {
+                      "press": "azpworkschedulerule.ext.lib.Assignment.onPress",
+                      "text": "{i18n>assignAction}",
+                      "requiresSelection": false,
+                      "enabled": true,
+                      "visible": true
                     }
                   }
                 }
               }
+            }
+          }
+        },
+        "AssignmentPage": {
+          "type": "Component",
+          "id": "AssignmentPage",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "viewName": "azpworkschedulerule.ext.view.Assignment",
+              "contextPath": "/WorkScheduleRule"
             }
           }
         },
@@ -189,7 +237,7 @@
                   "actions": {
                     "SimulateMonthUI": {
                       "press": "azpworkschedulerule.ext.lib.SimulateMonth.onPress",
-                      "text": "Monatssimulation anzeigen",
+                      "text": "{i18n>simulateMonthAction}",
                       "enabled": true,
                       "visible": true
                     },
@@ -198,6 +246,38 @@
                       "text": "{i18n>transportAction}",
                       "enabled": true,
                       "visible": true
+                    },
+                    "ValidateUI": {
+                      "press": "azpworkschedulerule.ext.lib.Validation.onHeaderValidatePress",
+                      "text": "{i18n>valActionValidate}",
+                      "enabled": true,
+                      "visible": true
+                    },
+                    "AssignEmployeeUI": {
+                      "press": "azpworkschedulerule.ext.lib.Assignment.onPress",
+                      "text": "{i18n>assignAction}",
+                      "enabled": true,
+                      "visible": true
+                    }
+                  }
+                },
+                "body": {
+                  "sections": {
+                    "WeekPatternGridSection": {
+                      "title": "{i18n>weekGridTitle}",
+                      "template": "azpworkschedulerule.ext.fragment.WeekPatternGrid",
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "Weeks"
+                      }
+                    },
+                    "ValidationSection": {
+                      "title": "{i18n>valFlowTitle}",
+                      "template": "azpworkschedulerule.ext.fragment.ValidationPanel",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Breaks"
+                      }
                     }
                   }
                 }

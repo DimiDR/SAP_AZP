@@ -1,0 +1,94 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin" busy="{valFlow>/busy}">
+		<HBox alignItems="Center" wrap="Wrap" class="sapUiTinyMarginBottom">
+			<Title text="{i18n>valFlowTitle}" level="H5" class="sapUiTinyMarginEnd"/>
+			<ObjectStatus
+				class="sapUiSmallMarginBegin"
+				title="{i18n>statusLabel}"
+				text="{valFlow>/statusText}"
+				state="{valFlow>/statusState}"/>
+			<ObjectStatus
+				class="sapUiSmallMarginBegin"
+				title="{i18n>transportAction}"
+				text="{= ${valFlow>/transport} || '–' }"
+				state="{= ${valFlow>/transport} ? 'Success' : 'None' }"/>
+		</HBox>
+
+		<HBox class="sapUiSmallMarginBottom azpValSteps" wrap="Wrap" justifyContent="SpaceBetween">
+			<VBox class="azpValStep sapUiSmallMarginEnd" width="30%">
+				<ObjectStatus
+					icon="sap-icon://accept"
+					text="1 · {i18n>valStepValidate}"
+					state="{valFlow>/step1State}"/>
+				<Text text="{i18n>valStepValidateDesc}" class="sapUiTinyMarginTop"/>
+			</VBox>
+			<VBox class="azpValStep sapUiSmallMarginEnd" width="30%">
+				<ObjectStatus
+					icon="sap-icon://shipping-status"
+					text="2 · {i18n>valStepTransport}"
+					state="{valFlow>/step2State}"/>
+				<Text text="{i18n>valStepTransportDesc}" class="sapUiTinyMarginTop"/>
+			</VBox>
+			<VBox class="azpValStep" width="30%">
+				<ObjectStatus
+					icon="sap-icon://save"
+					text="3 · {i18n>valStepActivate}"
+					state="{valFlow>/step3State}"/>
+				<Text text="{i18n>valStepActivateDesc}" class="sapUiTinyMarginTop"/>
+			</VBox>
+		</HBox>
+
+		<MessageStrip
+			text="{valFlow>/hint}"
+			type="{= ${valFlow>/ok} ? 'Success' : (${valFlow>/errorCount} > 0 ? 'Error' : 'Information') }"
+			showIcon="true"
+			class="sapUiTinyMarginBottom"/>
+
+		<OverflowToolbar class="sapUiTinyMarginBottom">
+			<Button
+				text="{i18n>valActionValidate}"
+				type="Emphasized"
+				icon="sap-icon://inspect"
+				press="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onValidatePress"/>
+			<Button
+				text="{i18n>transportAction}"
+				icon="sap-icon://shipping-status"
+				press="extension.azpworkschedulerule.ext.controller.WorkScheduleRuleObjectPage.onTransportPress"/>
+			<ToolbarSpacer/>
+			<ObjectStatus
+				title="{i18n>valErrors}"
+				text="{valFlow>/errorCount}"
+				state="{= ${valFlow>/errorCount} > 0 ? 'Error' : 'Success' }"/>
+			<ObjectStatus
+				class="sapUiSmallMarginBegin"
+				title="{i18n>valWarnings}"
+				text="{valFlow>/warningCount}"
+				state="{= ${valFlow>/warningCount} > 0 ? 'Warning' : 'None' }"/>
+		</OverflowToolbar>
+
+		<Table
+			items="{valFlow>/messages}"
+			mode="None"
+			growing="true"
+			growingThreshold="20"
+			noDataText="{i18n>valNoMessages}"
+			width="100%">
+			<columns>
+				<Column width="7rem"><Text text="{i18n>valSeverity}"/></Column>
+				<Column><Text text="{i18n>valMessage}"/></Column>
+				<Column width="12rem"><Text text="{i18n>valTarget}"/></Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<ObjectStatus text="{valFlow>state}" state="{valFlow>state}"/>
+						<Text text="{valFlow>text}"/>
+						<Text text="{valFlow>target}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</VBox>
+</core:FragmentDefinition>

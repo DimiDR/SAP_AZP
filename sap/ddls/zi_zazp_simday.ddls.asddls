@@ -1,4 +1,4 @@
-@EndUserText.label: 'AZP: Simulations-Tag'
+@EndUserText.label: 'AZP: Simulations-Tag / Transport / Zuordnung'
 define abstract entity ZI_ZAZP_SimDay
 {
   CalendarDay          : dats;
@@ -11,4 +11,12 @@ define abstract entity ZI_ZAZP_SimDay
   TransportRequest     : trkorr;
   TransportDescription : as4text;
   TransportOwner       : syuname;
+  Pernr                : persno;
+  RuleId               : schkn;
+  ValidFrom            : begda;
+  ValidTo              : endda;
+  EmploymentPct        : empct;
+  WeeklyHours          : wostd;
+  Success              : abap_boolean;
+  MessageText          : abap.char(255);
 }

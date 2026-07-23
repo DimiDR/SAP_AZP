@@ -1,6 +1,6 @@
 # AZP ABAP Mirror — Paket `ZAZP_HR_TIME`
 
-**Sync-Datum:** 2026-07-19 · **System:** S4P · **Quelle:** SAP ADT via MCP (SAPRead)
+**Sync-Datum:** 2026-07-23 · **System:** S4P · **Quelle:** SAP ADT via MCP (`user-ARC-1 S4P` / SAPRead, `version=active`, `force_refresh`)
 
 Lokale Spiegelung aller Kernobjekte des AZP-HR-Time-Pakets (Paket `ZAZP_HR_TIME`), typbasiert unter `sap/`.
 
@@ -15,12 +15,13 @@ Lokale Spiegelung aller Kernobjekte des AZP-HR-Time-Pakets (Paket `ZAZP_HR_TIME`
 | `prog/` | Reports und Includes (PROG/I) | `.prog.abap` |
 | `fugr/zazp_sm30/` | Funktionsgruppe ZAZP_SM30 | `.abap` |
 | `ddls/` | CDS View Entities | `.ddls.asddls` |
+| `ddlx/` | Metadata Extensions | `.ddlx.asddlxs` |
 | `dcls/` | Access Controls | `.dcls` |
 | `bdef/` | Behavior Definitions | `.bdef` |
 | `srvd/` | Service Definitions | `.srvd.asddlxs` |
 | `srvb/` | Service Bindings (Metadaten) | `.srvb.json` |
 | `tabl/` | Draft-Tabellen | `.tabl.asddls` |
-| `msag/` | Nachrichtenklasse (Vorlage) | `.msag.json` |
+| `msag/` | Nachrichtenklasse | `.msag.json` |
 
 ---
 
@@ -36,7 +37,7 @@ Lokale Spiegelung aller Kernobjekte des AZP-HR-Time-Pakets (Paket `ZAZP_HR_TIME`
 | `ZCL_ZAZP_GENERATION` | `zcl_zazp_generation.clas.abap` | aktiv |
 | `ZCL_ZAZP_ASSIGNMENT` | `zcl_zazp_assignment.clas.abap` | aktiv |
 | `ZBP_I_ZAZP_WORKSCHEDULERULE` | `zbp_i_zazp_workschedulerule.clas.abap` | aktiv |
-| `ZBP_I_ZAZP_WORKSCHEDULERULE` (locals) | `zbp_i_zazp_workschedulerule.clas.locals_imp.abap` | aktiv |
+| `ZBP_I_ZAZP_WORKSCHEDULERULE` (locals) | `zbp_i_zazp_workschedulerule.clas.locals_imp.abap` | aktiv (`readEmployeeAssignment`, `assignEmployee`) |
 
 ### Interface (`intf/`)
 
@@ -49,68 +50,93 @@ Lokale Spiegelung aller Kernobjekte des AZP-HR-Time-Pakets (Paket `ZAZP_HR_TIME`
 | Objekt | Typ | Datei | Status |
 |---|---|---|---|
 | `ZAZP01` | PROG | `zazp01.prog.abap` | aktiv |
-| `ZAZP_SM30_EVENTS` | PROG/I | `zazp_sm30_events.prog.abap` | aktiv |
-| `ZAZP_SM30_F01` | PROG/I | `zazp_sm30_f01.prog.abap` | aktiv (Platzhalter) |
+| `ZAZP_E2E` | PROG | `zazp_e2e.prog.abap` | aktiv |
+| `ZAZP_ODATA_SEARCH_TEST` | PROG | `zazp_odata_search_test.prog.abap` | aktiv (`$TMP`) |
+| `ZAZP_SM30_EVENTS` | PROG/I | `zazp_sm30_events.prog.abap` | aktiv (via `type=INCL`) |
+| `ZAZP_SM30_F01` | PROG/I | `zazp_sm30_f01.prog.abap` | aktiv = EVENTS-Body; **inaktiver Draft** in S4PK913042 |
 
 ### Funktionsgruppe (`fugr/zazp_sm30/`)
 
 | Objekt | Datei | Status |
 |---|---|---|
-| `SAPLZAZP_SM30` (main, aktiv) | `saplzazp_sm30.abap` | aktiv |
-| `SAPLZAZP_SM30` (main, Entwurf) | `saplzazp_sm30.inactive.abap` | **inaktiv** — bindet `lzazp_sm30f01` ein |
-| `LZAZP_SM30TOP` | `lzazp_sm30top.abap` | aktiv |
-| `LZAZP_SM30UXX` | `lzazp_sm30uxx.abap` | aktiv (generiert, leer) |
-| `LZAZP_SM30F01` | `lzazp_sm30f01.abap` | Entwurf — Inhalt aus `ZAZP_SM30_EVENTS` (ADT-Leseproblem) |
+| `SAPLZAZP_SM30` (main) | `saplzazp_sm30.abap` | aktiv (FUGR nicht in diesem Sync-Lauf neu gelesen) |
+| `LZAZP_SM30TOP` / `UXX` / `F01` | `lzazp_sm30*.abap` | siehe frühere Syncs / SE80 |
 
 ### CDS Views (`ddls/`)
 
-| Interface | Consumption / Abstract |
-|---|---|
-| `ZI_ZAZP_WORKSCHEDULERULE` | `ZC_ZAZP_WORKSCHEDULERULE` (transactional root) |
-| `ZI_ZAZP_RULETEXT` | — |
-| `ZI_ZAZP_WEEKPATTERN` | `ZC_ZAZP_WEEKPATTERN` |
-| `ZI_ZAZP_DAILYWORKSCHEDULE` | `ZC_ZAZP_DAILYWORKSCHEDULE` |
-| `ZI_ZAZP_DAILYWORKSCHEDULETEXT` | — |
-| `ZI_ZAZP_BREAKSCHEDULE` | `ZC_ZAZP_BREAKSCHEDULE` |
-| `ZI_ZAZP_EMPLOYEEASSIGNMENT` | `ZC_ZAZP_EMPLOYEEASSIGNMENT` |
-| `ZI_ZAZP_HOLIDAYCALENDAR` | — |
-| `ZA_ZAZP_COPYPARAMS` | Action-Parameter |
-| `ZA_ZAZP_MONTHPARAMS` | Action-Parameter |
-| `ZI_ZAZP_SIMDAY` | Action-Ergebnis |
+| Interface | Consumption / Abstract | Hinweise |
+|---|---|---|
+| `ZI_ZAZP_WORKSCHEDULERULE` | `ZC_ZAZP_WORKSCHEDULERULE` | Root; Felder **Status**, **StatusCriticality** |
+| `ZI_ZAZP_RULETEXT` | — | |
+| `ZI_ZAZP_WEEKPATTERN` | `ZC_ZAZP_WEEKPATTERN` | |
+| `ZI_ZAZP_DAILYWORKSCHEDULE` | `ZC_ZAZP_DAILYWORKSCHEDULE` | TIMS-Normalisierung `''`/`240000` |
+| `ZI_ZAZP_DAILYWORKSCHEDULETEXT` | — | |
+| `ZI_ZAZP_BREAKSCHEDULE` | `ZC_ZAZP_BREAKSCHEDULE` | TIMS-Normalisierung |
+| `ZI_ZAZP_EMPLOYEEASSIGNMENT` | `ZC_ZAZP_EMPLOYEEASSIGNMENT` | IT0007 |
+| `ZI_ZAZP_HOLIDAYCALENDAR` | — | VH (THOCI) |
+| `ZA_ZAZP_COPYPARAMS` | Action-Parameter | copyAsTemplate |
+| `ZA_ZAZP_SIMPARAMS` | Action-Parameter | `simulateMonth` (Jahr/Monat) |
+| `ZA_ZAZP_MONTHPARAMS` | Action-Parameter | Assignment (Pernr, RuleId, …) |
+| `ZA_ZAZP_TRANSPORTPARAMS` | Action-Parameter | `createTransportRequest` / `setPreferredTransport` |
+| `ZI_ZAZP_SIMDAY` | Action-Ergebnis | Simulation / Transport / Assignment-Payload |
+
+**Nicht im System (404):** `ZI_ZAZP_PSGROUPINGVH`, `ZI_ZAZP_RULEIDVH` — VH läuft über `distinctValues` auf `ZC_ZAZP_WorkScheduleRule`. Lokale Orphan-Dateien ggf. noch unter `ddls/` vorhanden, **nicht** aus S4P überschrieben.
 
 ### RAP / Services
 
 | Typ | Objekt | Datei | Status |
 |---|---|---|---|
-| DCLS | `ZI_ZAZP_WORKSCHEDULERULE` | `dcls/zi_zazp_workschedulerule.dcls` | aktiv (offen grant) |
-| DCLS | `ZI_ZAZP_DAILYWORKSCHEDULE` | `dcls/zi_zazp_dailyworkschedule.dcls` | aktiv (offen grant) |
-| DCLS | `ZI_ZAZP_BREAKSCHEDULE` | `dcls/zi_zazp_breakschedule.dcls` | aktiv (offen grant) |
-| BDEF | `ZI_ZAZP_WORKSCHEDULERULE` | `bdef/zi_zazp_workschedulerule.bdef` | aktiv (Draft + Deep Create + Actions) |
-| BDEF | `ZC_ZAZP_WORKSCHEDULERULE` | `bdef/zc_zazp_workschedulerule.bdef` | aktiv (Projection + children) |
-| DDLX | `ZC_ZAZP_*` (Rule/Week/Daily/Break) | `ddlx/` | aktiv |
+| DCLS | `ZI_ZAZP_WORKSCHEDULERULE` | `dcls/zi_zazp_workschedulerule.dcls` | aktiv (PFCG `S_TABU_NAM`/`S_TABU_DIS`) |
+| DCLS | `ZI_ZAZP_DAILYWORKSCHEDULE` | `dcls/zi_zazp_dailyworkschedule.dcls` | aktiv (PFCG) |
+| DCLS | `ZI_ZAZP_BREAKSCHEDULE` | `dcls/zi_zazp_breakschedule.dcls` | aktiv (PFCG) |
+| BDEF | `ZI_ZAZP_WORKSCHEDULERULE` | `bdef/zi_zazp_workschedulerule.bdef` | Draft + Actions inkl. **readEmployeeAssignment**, **assignEmployee** |
+| BDEF | `ZC_ZAZP_WORKSCHEDULERULE` | `bdef/zc_zazp_workschedulerule.bdef` | Projection; use actions inkl. Assignment |
+| DDLX | `ZC_ZAZP_*` (Rule/Week/Daily/Break) | `ddlx/` | aktiv; Rule-UI: Status + Criticality |
 | SRVD | `ZUI_ZAZP_WORKSCHEDULERULE` | `srvd/zui_zazp_workschedulerule.srvd.asddlxs` | aktiv |
-| SRVB | `ZUI_ZAZP_RULE_O4` | `srvb/zui_zazp_rule_o4.srvb.json` | published (Web API) |
 | SRVB | `ZUI_ZAZP_RULE_UI` | `srvb/zui_zazp_rule_ui.srvb.json` | **published** (primäre App) |
-| TABL | `ZAZP_D_RULE` | `tabl/zazp_d_rule.tabl.asddls` | aktiv |
-| TABL | `ZAZP_D_WEEK` / `DAILY` / `BREAK` | `tabl/zazp_d_*.tabl.asddls` | aktiv (Composition-Draft) |
+| SRVB | `ZUI_ZAZP_RULE_O4` | `srvb/zui_zazp_rule_o4.srvb.json` | published (Web API) |
+| TABL | `ZAZP_D_RULE` | `tabl/zazp_d_rule.tabl.asddls` | aktiv inkl. `status` / `statuscriticality` |
+| TABL | `ZAZP_D_WEEK` / `DAILY` / `BREAK` | `tabl/zazp_d_*.tabl.asddls` | aktiv |
+
+### Behavior-Actions (ZI / ZC)
+
+| Action | Art | Parameter | Ergebnis |
+|---|---|---|---|
+| `copyAsTemplate` | instance | `ZA_ZAZP_CopyParams` | `$self` |
+| `simulateMonth` | instance | `ZA_ZAZP_SimParams` | `ZI_ZAZP_SimDay[]` |
+| `listTransportRequests` | static | — | `ZI_ZAZP_SimDay[]` |
+| `createTransportRequest` | static | `ZA_ZAZP_TransportParams` | `ZI_ZAZP_SimDay` |
+| `setPreferredTransport` | static | `ZA_ZAZP_TransportParams` | — |
+| `readEmployeeAssignment` | static | `ZA_ZAZP_MonthParams` | `ZI_ZAZP_SimDay` |
+| `assignEmployee` | static | `ZA_ZAZP_MonthParams` | `ZI_ZAZP_SimDay` |
 
 ### Nachrichtenklasse (`msag/`)
 
 | Objekt | Datei | Hinweis |
 |---|---|---|
-| `ZAZP` | `zazp.msag.json` | Vorlage — Texte im System (SE91) noch leer |
+| `ZAZP` | `zazp.msag.json` | SAPRead: `messages: []` (SE91 leer); JSON enthält lokale Text-Vorlage |
 
 ---
 
-## Inaktive Objekte im System (Stand Sync)
+## Status-Felder (Root)
 
-| Objekt | Typ | Transport |
+In `ZI_ZAZP_WorkScheduleRule` / Draft `ZAZP_D_RULE` / UI-DDLX:
+
+| Feld | Bedeutung |
+|---|---|
+| `Status` | `Abgelaufen` / `Geplant` / `In SAP` (CASE auf `ValidTo`/`ValidFrom` vs. Systemdatum) |
+| `StatusCriticality` | `1` / `2` / `5` — UI Criticality + Icon |
+
+---
+
+## Inaktive Objekte / Hinweise (Stand Sync)
+
+| Objekt | Typ | Transport / Hinweis |
 |---|---|---|
-| `ZAZP_SM30` | FUGR | — |
-| `SAPLZAZP_SM30` | FUGR/I | S4PK913042 |
-| `ZUI_ZAZP_RULE_O4` | SRVB | S4PK913042 |
-
-**FUGR-Entwurf:** Inaktive Version von `SAPLZAZP_SM30` enthält `INCLUDE zazp_sm30_events.` (Syntax OK). ADT-Aktivierung der FUGR schlägt fehl → in **SE80** aktivieren (siehe `docu/technisch/AZP-P1-Manuelle-Schritte.md`).
+| `ZAZP_SM30_F01` | PROG/I | Inactive draft in **S4PK913042**; Mirror = active (= EVENTS-Body) |
+| `ZAZP_ODATA_SEARCH_TEST` | PROG | Paket `$TMP` |
+| `ZAZP_ODATA_SMOKE` | PROG | `$TMP` — nicht gespiegelt |
+| FUGR `ZAZP_SM30` | FUGR | ggf. inaktiv; SE80-Aktivierung siehe Doku |
 
 ---
 
@@ -118,18 +144,19 @@ Lokale Spiegelung aller Kernobjekte des AZP-HR-Time-Pakets (Paket `ZAZP_HR_TIME`
 
 | Objekt | Problem |
 |---|---|
-| `ZAZP_SM30_EVENTS`, `ZAZP_SM30_F01` | Typ PROG/I (Include), nicht PROG — gelesen via `SAPRead type=INCL` |
-| `LZAZP_SM30F01` | ADT: `[Could not read include]` — gespiegelt aus `ZAZP_SM30_EVENTS` |
-| `ZUI_ZAZP_RULE_O4` | Nur Metadaten (JSON), kein AFF-Quelltext |
-| `ZAZP` (MSAG) | System leer — Vorlage aus `zazp.msag.json` |
+| `ZI_ZAZP_PSGROUPINGVH` | **404** — existiert nicht in S4P |
+| `ZI_ZAZP_RULEIDVH` | **404** — existiert nicht in S4P |
+| `ZAZP` (MSAG) | lesbar, aber System-Texte leer |
+| `ZUI_ZAZP_RULE_*` (SRVB) | nur JSON-Metadaten, kein AFF-Quelltext |
+| FUGR-Includes | dieser Lauf: nicht erneut gelesen |
 
 ---
 
 ## Sync erneuern
 
 ```text
-SAPRead type=<TYP> name=<OBJ> version=active
-FUGR: expand_includes=true, version=auto
+SAPRead type=<TYP> name=<OBJ> version=active force_refresh=true
 CLAS locals: include=implementations
 INCL: ZAZP_SM30_EVENTS / ZAZP_SM30_F01 (nicht PROG)
+Paket-Inventar: SAPRead type=DEVC name=ZAZP_HR_TIME
 ```

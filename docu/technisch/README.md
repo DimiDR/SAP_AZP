@@ -12,5 +12,6 @@ ABAP/RAP-Implementierung, CDS, Service-Schicht, Transport und Umsetzungsstand.
 | [AZP-Offene-ToDos.md](AZP-Offene-ToDos.md) | P1 / P2 / P3 |
 | [AZP-P1-Manuelle-Schritte.md](AZP-P1-Manuelle-Schritte.md) | SE91 / SE93 / SE80 / SE54 Klickpfade |
 | [AZP-OData-V4-Service.md](AZP-OData-V4-Service.md) | Binding publish, Service-URL, Smoke-Test |
+| [../../sap/README.md](../../sap/README.md) | ABAP-Spiegel aus S4P (Sync 2026-07-23) |
 
 Fachliches Zielbild: [../fachlich/](../fachlich/).

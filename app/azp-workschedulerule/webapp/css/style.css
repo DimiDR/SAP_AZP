@@ -1,0 +1,14 @@
+/* AZP Fiori comfort / week grid */
+.azpWeekGrid .azpDayCell {
+	min-width: 4.5rem;
+}
+.azpWeekGrid .azpDayCell .sapMObjectStatus {
+	font-size: 0.75rem;
+}
+.azpValSteps .azpValStep {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--sapGroup_ContentBorderColor, #d9d9d9);
+	border-radius: 0.25rem;
+	background: var(--sapGroup_ContentBackground, #fff);
+	box-sizing: border-box;
+}

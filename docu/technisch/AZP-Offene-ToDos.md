@@ -1,7 +1,7 @@
 # AZP – Offene ToDos
 
-Stand: 2026-07-20 · Paket `ZAZP_HR_TIME` · System S4P  
-Bezug: [AZP-ABAP-Implementierungsstand.md](AZP-ABAP-Implementierungsstand.md) · GUI-Rest: [AZP-P1-Manuelle-Schritte.md](AZP-P1-Manuelle-Schritte.md)
+Stand: 2026-07-23 · Paket `ZAZP_HR_TIME` · System S4P  
+Bezug: [AZP-ABAP-Implementierungsstand.md](AZP-ABAP-Implementierungsstand.md) · GUI-Rest: [AZP-P1-Manuelle-Schritte.md](AZP-P1-Manuelle-Schritte.md) · Spiegel: [`sap/README.md`](../../sap/README.md)
 
 Legende: **P1** blockiert GUI-Produktivnutzung · **P2** sinnvoll vor Abnahme · **P3** Web-UI / später
 
@@ -28,11 +28,11 @@ Legende: **P1** blockiert GUI-Produktivnutzung · **P2** sinnvoll vor Abnahme ·
 |---|---|---|---|
 | 10 | E2E Validierung | **Report bereit** | `/nSE38` → `ZAZP_E2E` (Default `NORM` / `08` / `01`) |
 | 11 | E2E Monatssimulation + Feiertag | **Report bereit** | gleicher Report; prüft `is_holiday` / `day_type = 2` |
-| 12 | Persist + Transport | **teilweise** | Report prüft offene Customizing-Aufträge + `ensure_*`. Keys in `E071K` nach Fiori-/SM30-Save prüfen. Offene W-Aufträge existieren im System. |
-| 13 | IT0007-Zuordnung | **teilweise** | Report: Read-only mit `P_PERNR` (kein Write). Write braucht `P_ORGIN` + echte Personalnummer. |
+| 12 | Persist + Transport | **teilweise** | Report prüft offene Customizing-Aufträge + `ensure_*`. Keys in `E071K` nach Fiori-/SM30-Save prüfen. |
+| 13 | IT0007-Zuordnung | **UI + RAP fertig** | Actions `readEmployeeAssignment` / `assignEmployee` aktiv; Fiori-Dialog. Write-E2E braucht `P_ORGIN` + echte PERNR. Report weiter Read-Smoke. |
 | 14 | ~~DCL `aspect pfcg_auth`~~ | **Erledigt** | Root/Daily/Break: `S_TABU_NAM` + `S_TABU_DIS` (`DICBERCLS = 'PC'`) |
 | 15 | ~~DCL Daily/Break anlegen~~ | Erledigt | |
-| 16 | ATC Literale → MSAG | **teilweise** | `add_message` löst jetzt `MESSAGE ID 'ZAZP' … INTO` auf; Call-Site-Literale bleiben bis SE91 (#1) als Fallback. SELECT-SINGLE-Findings optional. |
+| 16 | ATC Literale → MSAG | **teilweise** | `add_message` löst `MESSAGE ID 'ZAZP' … INTO` auf; Call-Site-Literale bleiben bis SE91 (#1) als Fallback. |
 | 17 | ~~Textsymbole Report `ZAZP01`~~ | Erledigt | |
 
 ---
@@ -42,17 +42,19 @@ Legende: **P1** blockiert GUI-Produktivnutzung · **P2** sinnvoll vor Abnahme ·
 | # | ToDo | Status | Hinweis |
 |---|---|---|---|
 | 18–23b, 26 | Draft / Actions / Binding / Composition | Erledigt | |
-| 24 | Launchpad-Kachel | **GUI / FLP** | Inbound in `manifest.json` vorhanden (`azpworkschedulerule` / `tile`). MCP-FLP-Write blockiert (`allowWrites=false`). Catalog/Group/Tile manuell. |
-| 25 | PFCG-Rollen `ZAZP_VIEWER/EDITOR/ADMIN` | **GUI (PFCG)** | Konzept: [AZP-Rollen-Berechtigungskonzept.md](../fachlich/AZP-Rollen-Berechtigungskonzept.md). Auth-Gruppe Tabellen = `PC`. |
+| 24 | Launchpad-Kachel | **GUI / FLP** | Inbound in `manifest.json` vorhanden. Catalog/Group/Tile manuell. |
+| 25 | PFCG-Rollen `ZAZP_VIEWER/EDITOR/ADMIN` | **GUI (PFCG)** | Konzept: [AZP-Rollen-Berechtigungskonzept.md](../fachlich/AZP-Rollen-Berechtigungskonzept.md). |
+| 27 | Fachbereich UX | **lokal fertig** | Wochenmuster-Grid, Status-Ampel, Validierungs-Panel, Multi-Select, **Mitarbeiter zuordnen**-Dialog. CDS `Status`/`StatusCriticality` auf S4P aktiv. App deployen. |
+| 28 | Service Binding republish | **offen** | Customizing-Client blockiert Publish von `ZUI_ZAZP_RULE_UI` — manuell /IWFND/V4_ADMIN nach Action-Änderungen. |
 
 ---
 
-## Bereits erledigt (2026-07-20 Nachzug)
+## Bereits erledigt (Nachzug 2026-07-23)
 
-- DCL Root/Daily/Break auf `pfcg_auth` umgestellt und aktiviert  
-- `ZCL_ZAZP_VALIDATION=>add_message` → MSAG-Auflösung via `MESSAGE … INTO`  
-- Report `ZAZP_E2E` (P2 #10–#13 Smoke) angelegt + aktiv  
-- Lokale MSAG-Vorlage um RAP-Meldungen `050`–`056` ergänzt  
+- RAP: `readEmployeeAssignment` / `assignEmployee` + Fiori-Zuordnungsdialog  
+- CDS: `Status` / `StatusCriticality` (Geplant / In SAP / Abgelaufen)  
+- Fiori: Wochenmuster-Grid, Validierungs-Flow, Status-Spalte, Massen-Validieren  
+- Lokaler Spiegel `sap/` erneut aus S4P gezogen  
 
 ---
 
@@ -62,14 +64,13 @@ Legende: **P1** blockiert GUI-Produktivnutzung · **P2** sinnvoll vor Abnahme ·
 |---|---|---|
 | `ZAZP_SM30` / `SAPLZAZP_SM30` | FUGR | **SE80 aktivieren** (Entwurf: `INCLUDE zazp_sm30_events.`) |
 | `ZAZP_SM30_F01` | INCL | nach Aktivierung leeren/löschen |
-| `ZTEST_MCP_TMP` | TABL | Testobjekt — ggf. löschen |
 
 ---
 
-## Empfohlene Reihenfolge (Rest-GUI)
+## Empfohlene Reihenfolge (Rest)
 
 1. **SE91** `ZAZP` Texte aus `sap/msag/zazp.msag.json` (mind. `000`)  
 2. **SE80** FUGR `ZAZP_SM30` aktivieren  
 3. **SE54** Events 01 an die vier Views  
-4. `/nSE38` → `ZAZP_E2E` laufen lassen  
-5. PFCG-Rollen + FLP-Kachel  
+4. `/nSE38` → `ZAZP_E2E` + Fiori-Zuordnung mit Test-PERNR  
+5. PFCG-Rollen + FLP-Kachel + Service republish + App-Deploy  

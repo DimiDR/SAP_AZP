@@ -1,0 +1,8 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ObjectStatus
+		text="{= %{HasDraftEntity} ? ${i18n>statusDraft} : (%{IsActiveEntity} === false ? ${i18n>statusDraft} : (%{Status} || ${i18n>statusInSap})) }"
+		state="{= %{HasDraftEntity} || %{IsActiveEntity} === false ? 'Warning' : (%{StatusCriticality} === 1 ? 'Error' : (%{StatusCriticality} === 2 ? 'Warning' : (%{StatusCriticality} === 3 ? 'Success' : 'Information'))) }"
+		inverted="true"/>
+</core:FragmentDefinition>

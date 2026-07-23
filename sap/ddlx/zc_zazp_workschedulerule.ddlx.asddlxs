@@ -21,7 +21,7 @@ annotate view ZC_ZAZP_WorkScheduleRule with
       id: 'Weeks',
       purpose: #STANDARD,
       type: #LINEITEM_REFERENCE,
-      label: 'Wochenmuster',
+      label: 'Wochenmuster (Tabelle)',
       position: 20,
       targetElement: '_Weeks'
     },
@@ -75,6 +75,7 @@ annotate view ZC_ZAZP_WorkScheduleRule with
   @UI.identification: [{ position: 60 }]
   DwsGrouping;
 
+  @UI.selectionField: [{ position: 45 }]
   @UI.identification: [{ position: 70 }]
   PeriodId;
 
@@ -83,6 +84,7 @@ annotate view ZC_ZAZP_WorkScheduleRule with
   @UI.identification: [{ position: 80 }]
   ValidFrom;
 
+  @UI.selectionField: [{ position: 42 }]
   @UI.lineItem: [{ position: 60 }]
   @UI.identification: [{ position: 90 }]
   ValidTo;
@@ -90,6 +92,15 @@ annotate view ZC_ZAZP_WorkScheduleRule with
   @UI.lineItem: [{ position: 70 }]
   @UI.identification: [{ position: 100 }]
   AvgWeekHours;
+
+  @UI.selectionField: [{ position: 50 }]
+  @UI.lineItem: [{ position: 80, criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON, importance: #HIGH }]
+  @UI.identification: [{ position: 105, criticality: 'StatusCriticality' }]
+  @UI.dataPoint: { title: 'Status', criticality: 'StatusCriticality' }
+  Status;
+
+  @UI.hidden: true
+  StatusCriticality;
 
   @UI.identification: [{ position: 110 }]
   AvgDayHours;

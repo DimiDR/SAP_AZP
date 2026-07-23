@@ -1,4 +1,4 @@
-@EndUserText.label: 'AZP: Parameter Kopieren als Vorlage'
+@EndUserText.label: 'AZP: Copy as Template Params'
 define abstract entity ZA_ZAZP_CopyParams
 {
   NewRuleId    : schkn;

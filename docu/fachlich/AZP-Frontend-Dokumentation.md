@@ -3,7 +3,7 @@
 > UI-Zielbild des AZP-Tools. Das **optionale Eigen-Frontend ist eine Fiori-Elements-UI auf ABAP RAP**.
 > Der klassische Desktop-Zugang zu Arbeitszeitplänen ist **SAP GUI (Standard-Transaktionen)** – kein
 > Eigenbau. Baut auf [`AZP-SAP-Arbeitszeitplan-Dokumentation.md`](AZP-SAP-Arbeitszeitplan-Dokumentation.md) auf.
-> Stand: 2026-07-17
+> Stand: 2026-07-23
 
 ---
 
@@ -14,12 +14,28 @@ Zwei Oberflächen auf **derselben ABAP-Logik** (§5):
 | | **Fiori-UI (Fiori Elements auf RAP)** | **SAP GUI (Standard)** |
 |---|---|---|
 | Rolle | moderne, komfortable Oberfläche | vollwertige Pflege im System |
-| Muss gebaut werden? | optional – RAP-Service + Fiori-App | nein – `SM30`/`SPRO`, optional Transaktion `ZAZP01` |
+| Muss gebaut werden? | RAP-Service + Fiori-App (umgesetzt) | nein – `SM30`/`SPRO`, Transaktion `ZAZP01` |
 | Pflege über | List Report / Object Page (OData) | SM30-Pflegeviews mit Validierungs-Events |
-| Logik | ruft `ZCL_ZAZP_VALIDATION` | ruft `ZCL_ZAZP_VALIDATION` (dieselbe) |
+| Logik | ruft `ZCL_ZAZP_*` | ruft `ZCL_ZAZP_*` (dieselbe) |
 
-Beide sind gleichwertig: **SAP GUI funktioniert voll ohne Fiori**; Fiori ist der optionale Komfort-Zugang.
+Beide sind gleichwertig: **SAP GUI funktioniert voll ohne Fiori**; Fiori ist der Komfort-Zugang.
 Schwerpunkt dieses Dokuments ist die Fiori-UI (§3); SAP GUI siehe §4, Logik-Verteilung §5.
+
+### Ist-Stand Fiori (App `azp-workschedulerule`)
+
+| Feature | Status | Ort |
+|---|---|---|
+| List Report + Object Page + Draft | ✔ | Fiori Elements |
+| Kopieren als Vorlage | ✔ | Action `copyAsTemplate` |
+| Monatssimulation | ✔ | `ext/lib/SimulateMonth.js` |
+| Transport wählen/anlegen | ✔ | `ext/lib/Transport.js` |
+| Wochenmuster-Grid Mo–So + Σ | ✔ | Custom Section `WeekPatternGrid` |
+| Status-Ampel (Entwurf / Geplant / In SAP / Abgelaufen) | ✔ | CDS `Status` + Custom-Spalte |
+| Validierung & Freigabe (Prüfen → Transport → Aktivieren) | ✔ | Custom Section `ValidationPanel` |
+| Multi-Select / Massen-Validieren | ✔ | List Report Actions |
+| **Mitarbeiter zuordnen (IT0007)** | ✔ | Button + Dialog `Assignment.js` / Actions `readEmployeeAssignment` · `assignEmployee` |
+
+Noch manuell: FLP-Kachel, PFCG-Rollen, MSAG-Texte, App-Deploy / Service-Republish.
 
 ---
 
@@ -243,11 +259,9 @@ Dadurch funktioniert **SAP GUI voll und ohne Fiori**, und beide Oberflächen tei
 
 ## 9. Nächste Schritte
 
-1. **Fiori-Annotationen** für List Report + Object Page aus dem Service ableiten; Wochenmuster als
-   Custom Section vorsehen.
-2. **Wochenmuster-Grid** als wiederverwendbares Control gestalten.
-3. **Aktionsbindung**: Validieren / Simulieren / Export als Service-Aktionen.
-4. **Transport-Integration**: Service-Funktion zum Lesen offener Customizing-Aufträge und Anlegen neuer
-   Aufträge; Aufzeichnung der Customizing-Sätze auf dem gewählten Auftrag
-   → Details in [`AZP-Transport-Service-Spezifikation.md`](../technisch/AZP-Transport-Service-Spezifikation.md).
-5. Abstimmung mit Fachbereich anhand der Wireframes (Feldumfang, Pflichtfelder, Value-Helps).
+1. ~~Fiori-Annotationen / Wochenmuster-Grid / Actions / Transport~~ → erledigt (siehe Ist-Stand §1).
+2. ~~Mitarbeiterzuordnung als eigener Dialog~~ → erledigt.
+3. App auf S4P **deployen**; Service Binding bei Bedarf republishen.
+4. FLP-Kachel + PFCG-Rollen anlegen.
+5. Fachbereich-Abnahme (Feldumfang, Pflichtfelder, Value-Helps, IT0007-Write mit Test-PERNR).
+6. Optional: Wochenmuster-Grid mit Value-Help auf Tagespläne verfeinern.

@@ -6,7 +6,7 @@
 > RAP-Behavior (→ [`AZP-Service-Schicht.md`](AZP-Service-Schicht.md)).
 > Grundlage: verifizierte SAP-Tabellen
 > ([`AZP-SAP-Arbeitszeitplan-Dokumentation.md`](../fachlich/AZP-SAP-Arbeitszeitplan-Dokumentation.md)).
-> Stand: 2026-07-19
+> Stand: 2026-07-23
 
 ---
 
@@ -90,7 +90,7 @@ define root view entity ZC_ZAZP_WorkScheduleRule
 
 | Interface-View | CDS-Feld | Standardfeld | Tabelle |
 |---|---|---|---|
-| WorkScheduleRule | RuleId · HolidayCalendarId · PsGrouping · EsGrouping · DwsGrouping · PeriodId · ValidFrom/To · Avg* · WorkdaysPerWeek | SCHKZ · MOFID · MOSID · ZEITY · MOTPR · ZMODN · BEGDA/ENDDA · TGSTD/WOSTD/M1STD/JRSTD · WKWDY | T508A (+T508S) |
+| WorkScheduleRule | RuleId · HolidayCalendarId · PsGrouping · EsGrouping · DwsGrouping · PeriodId · ValidFrom/To · Avg* · WorkdaysPerWeek · **Status** · **StatusCriticality** | SCHKZ · MOFID · MOSID · ZEITY · MOTPR · ZMODN · BEGDA/ENDDA · TGSTD/… · *(Status virtuell: Geplant / In SAP / Abgelaufen)* | T508A (+T508S) |
 | WeekPattern | DwsGrouping · PeriodId · WeekNumber · Monday…Sunday | MOTPR · ZMODN · WONUM · TPRG1…TPRG7 | T551A |
 | DailyWorkSchedule | DwsGrouping · Code · Variant · TargetHours · WorkStart/End · NormalStart/End · Tol* · CoreStart/End · BreakId | MOTPR · TPROG · VARIA · SOLLZ · SOBEG/SOEND · NOBEG/NOEND · BTBEG/BTEND·ETBEG/ETEND · K1BEG/K1END · PAMOD | T550A (+T550S) |
 | BreakSchedule | DwsGrouping · BreakId · SeqNo · StartTime/EndTime · PaidHours/UnpaidHours · AfterHours | MOTPR · PAMOD · SEQNO · PABEG/PAEND · PDBEZ/PDUNB · STDAZ | T550P |

@@ -22,6 +22,8 @@ define table zazp_d_rule {
   workdaysperweek       : wkwdy;
   referencedate         : bzpkt;
   offsetdays            : offbz;
+  status                : char12;
+  statuscriticality     : int4;
   lastchangedat         : abp_lastchange_tstmpl;
   locallastchangedat    : abp_locinst_lastchange_tstmpl;
   "%admin"              : include sych_bdl_draft_admin_inc;

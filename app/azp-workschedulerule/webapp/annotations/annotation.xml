@@ -32,12 +32,38 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Status"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#AvgWeek"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="Status">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="Status"/>
+                        <PropertyValue Property="Title" String="Status"/>
+                        <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="AvgWeek">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="AvgWeekHours"/>
+                        <PropertyValue Property="Title" String="Ø Woche"/>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.SelectionFields">
                     <Collection>
                         <PropertyPath>RuleId</PropertyPath>
                         <PropertyPath>PsGrouping</PropertyPath>
                         <PropertyPath>HolidayCalendarId</PropertyPath>
                         <PropertyPath>ValidFrom</PropertyPath>
+                        <PropertyPath>ValidTo</PropertyPath>
+                        <PropertyPath>PeriodId</PropertyPath>
+                        <PropertyPath>Status</PropertyPath>
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.LineItem">
@@ -69,6 +95,7 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="AvgWeekHours"/>
                         </Record>
+                        <!-- Status-Ampel: custom column StatusColumn in manifest (draft-aware) -->
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.Identification">
@@ -125,6 +152,10 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="OffsetDays"/>
                         </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Status"/>
+                            <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                        </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.Facets">
@@ -134,9 +165,10 @@
                             <PropertyValue Property="Label" String="Allgemein"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.Identification"/>
                         </Record>
+                        <!-- Anchor for custom WeekPatternGrid section (manifest body.sections) -->
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="Weeks"/>
-                            <PropertyValue Property="Label" String="Wochenmuster"/>
+                            <PropertyValue Property="Label" String="Wochenmuster (Tabelle)"/>
                             <PropertyValue Property="Target" AnnotationPath="_Weeks/@UI.LineItem"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
@@ -151,6 +183,14 @@
                         </Record>
                     </Collection>
                 </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/Status">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/StatusCriticality">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
             </Annotations>
 
             <!-- Filter value helps: without Common.ValueList, FE opens only
@@ -243,6 +283,12 @@
                     </Record>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/PeriodId">
+                <Annotation Term="Common.Label" String="Perioden-AZP"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/ValidTo">
+                <Annotation Term="Common.Label" String="Gültig bis"/>
+            </Annotations>
 
             <Annotations Target="com.sap.gateway.srvd_a2x.zui_zazp_workschedulerule.v0001.HolidayCalendarType">
                 <Annotation Term="UI.LineItem">
@@ -289,6 +335,7 @@
                             <Collection>
                                 <PropertyPath>LocalLastChangedAt</PropertyPath>
                                 <PropertyPath>LastChangedAt</PropertyPath>
+                                <PropertyPath>StatusCriticality</PropertyPath>
                             </Collection>
                         </PropertyValue>
                     </Record>

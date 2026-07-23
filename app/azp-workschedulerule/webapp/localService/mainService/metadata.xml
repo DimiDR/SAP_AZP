@@ -33,7 +33,7 @@
                 <Property Name="AvgMonthHours" Type="Edm.Decimal" Precision="7" Scale="2"/>
                 <Property Name="AvgYearHours" Type="Edm.Decimal" Precision="7" Scale="2"/>
                 <Property Name="WorkdaysPerWeek" Type="Edm.Decimal" Precision="3" Scale="1"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="12"/>
                 <Property Name="StatusCriticality" Type="Edm.Int32"/>
         <NavigationProperty Name="_Weeks" Type="Collection(com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WeekPatternType)" Partner="_Rule">
           <ReferentialConstraint Property="DwsGrouping" ReferencedProperty="DwsGrouping"/>
@@ -332,6 +332,20 @@
                 </Annotation>
             </Annotations>
             
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/Status">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/StatusCriticality">
+                <Annotation Term="Common.Label" String="Status Criticality"/>
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/Status">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+            <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/StatusCriticality">
+                <Annotation Term="Common.Label" String="Status Criticality"/>
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
             <Annotations Target="com.sap.gateway.srvd.zui_zazp_workschedulerule.v0001.WorkScheduleRuleType/RuleId">
                 <Annotation Term="Common.Label" String="AZP-ID"/>
             </Annotations>

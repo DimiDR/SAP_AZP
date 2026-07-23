@@ -83,8 +83,11 @@ sap.ui.define(
 		}
 
 		function _setPreferred(oModel, sTrkorr) {
+			// ZA_ZAZP_TransportParams marks both fields mandatory in OData —
+			// always send TransportDescription (empty) when selecting existing.
 			return _invokeStaticAction(oModel, ACTION_SET, {
-				TransportRequest: sTrkorr
+				TransportRequest: sTrkorr,
+				TransportDescription: ""
 			}).then(function () {
 				_sSessionTrkorr = sTrkorr;
 				try {
@@ -98,6 +101,7 @@ sap.ui.define(
 
 		function _createAndPrefer(oModel, sDescription) {
 			return _invokeStaticAction(oModel, ACTION_CREATE, {
+				TransportRequest: "",
 				TransportDescription: sDescription || "AZP Customizing"
 			}).then(function (v) {
 				var a = _normalizeRequests(v);
@@ -321,6 +325,7 @@ sap.ui.define(
 			ensurePreferred: ensurePreferred,
 			openDialog: openDialog,
 			getRememberedTrkorr: _rememberedTrkorr,
+			getPreferred: _rememberedTrkorr,
 			ACTION_LIST: ACTION_LIST,
 			ACTION_CREATE: ACTION_CREATE,
 			ACTION_SET: ACTION_SET

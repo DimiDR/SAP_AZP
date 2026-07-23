@@ -59,7 +59,7 @@ flowchart TB
   ASN -.-> PA
 ```
 
-`ASSIGNMENT` ist implementiert, aber noch **nicht** an GUI/SM30/RAP-Actions angebunden (gestrichelte Linie).
+`ASSIGNMENT` ist über RAP-Actions `readEmployeeAssignment` / `assignEmployee` und den Fiori-Dialog angebunden (durchgezogene Linie).
 
 ---
 
@@ -102,7 +102,7 @@ flowchart LR
 | **PERSIST** | Schreiben/Löschen Customizing + Textte | RAP-Saver, Action `copyAsTemplate` |
 | **TRANSPORT** | Offenen Customizing-Auftrag sichern, TABU-Keys | PERSIST, RAP-Saver |
 | **GENERATION** | Monatssimulation (nur Lesen/Rechnen) | ZAZP01, RAP-Action `simulateMonth` |
-| **ASSIGNMENT** | IT0007 zuordnen (`HR_MAINTAIN_MASTERDATA`) | *(noch kein Einstieg)* |
+| **ASSIGNMENT** | IT0007 zuordnen (`HR_MAINTAIN_MASTERDATA`) | RAP `assignEmployee` / Fiori-Dialog; GUI: `PA30` |
 
 Unter den `ZCL_ZAZP_*`-Klassen gibt es nur diese Abhängigkeiten:
 
@@ -251,7 +251,7 @@ PA0007.SCHKZ → T508A.SCHKZ → T508A.ZMODN → T551A
 | Weg | Was | Wer |
 |---|---|---|
 | **A – Customizing** | Regel + Wochen + Tagespläne + Pausen pflegen | GUI/SM30/Fiori → VALIDATION + PERSIST + TRANSPORT |
-| **B – Zuordnung** | Mitarbeiter (IT0007) einer Regel zuweisen | `ASSIGNMENT` (vorbereitet, noch nicht verdrahtet) |
+| **B – Zuordnung** | Mitarbeiter (IT0007) einer Regel zuweisen | `ASSIGNMENT` + RAP/Fiori verdrahtet |
 
 ---
 

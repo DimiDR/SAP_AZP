@@ -341,7 +341,7 @@ CLASS zcl_zazp_validation IMPLEMENTATION.
 
 
   METHOD add_message.
-    DATA lv_text TYPE string.
+DATA lv_text TYPE string.
 
     IF msgno IS NOT INITIAL.
       MESSAGE ID zif_zazp_validation=>c_msgid

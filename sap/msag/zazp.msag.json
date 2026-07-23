@@ -1,43 +1,149 @@
 {
-  "formatVersion": "1",
-  "header": {
-    "description": "AZP Validierungs- und Meldungstexte",
-    "originalLanguage": "de"
-  },
-  "messages": [
-    { "number": "000", "text": "&1&2&3&4" },
-    { "number": "001", "text": "Arbeitszeitplanregel (SCHKZ) ist leer" },
-    { "number": "002", "text": "Arbeitszeitplanregel &1 nicht gefunden" },
-    { "number": "003", "text": "Gueltig-ab muss kleiner/gleich Gueltig-bis sein" },
-    { "number": "004", "text": "Durchschnittswochenstunden ausserhalb Bereich" },
-    { "number": "005", "text": "Periodenarbeitszeitplan &1 nicht gefunden" },
-    { "number": "006", "text": "Tagesplan &1 existiert nicht" },
-    { "number": "007", "text": "Wochensumme weicht von Ø-Wochenwert ab" },
-    { "number": "010", "text": "Tagesplan-Code (TPROG) ist leer" },
-    { "number": "011", "text": "Tagesplan hat 0 Sollstunden (Frei-Tag)" },
-    { "number": "012", "text": "Arbeitsbeginn muss vor Arbeitsende liegen" },
-    { "number": "013", "text": "Kernzeitbeginn muss vor Kernzeitende liegen" },
-    { "number": "014", "text": "Kernzeit muss innerhalb des Sollrahmens liegen" },
-    { "number": "015", "text": "Kernzeit muss innerhalb der Normalzeit liegen" },
-    { "number": "016", "text": "Normalzeit muss innerhalb des Sollrahmens liegen" },
-    { "number": "017", "text": "Anfangstoleranz liegt ausserhalb des Sollrahmens" },
-    { "number": "018", "text": "Sollstunden nicht plausibel zu Rahmen/Pausen" },
-    { "number": "020", "text": "Pausenplan (PAMOD) ist leer" },
-    { "number": "021", "text": "Pausenbeginn muss vor Pausenende liegen" },
-    { "number": "022", "text": "Pause liegt ausserhalb des Arbeitszeitrahmens" },
-    { "number": "023", "text": "Pausenplan &1 existiert nicht" },
-    { "number": "030", "text": "Gueltiger offener Customizing-Auftrag erforderlich" },
-    { "number": "031", "text": "Loeschung erfordert vollstaendigen T508A-Schluessel" },
-    { "number": "032", "text": "Kein T508A-Satz zum Loeschen gefunden" },
-    { "number": "040", "text": "Personalnummer und AZP-Regel sind Pflicht" },
-    { "number": "041", "text": "HR_MAINTAIN_MASTERDATA fehlgeschlagen" },
-    { "number": "042", "text": "IT0007 Zuordnung erfolgreich" },
-    { "number": "050", "text": "Kein offener Customizing-Auftrag verfuegbar" },
-    { "number": "051", "text": "Neue Regel-ID ist Pflicht" },
-    { "number": "052", "text": "Kopieren/Transport fehlgeschlagen" },
-    { "number": "053", "text": "Jahr und Monat sind Pflicht" },
-    { "number": "054", "text": "Keine Simulationstage ermittelt" },
-    { "number": "055", "text": "Speichern/Transport fehlgeschlagen" },
-    { "number": "056", "text": "Loeschen/Transport fehlgeschlagen" }
-  ]
+    "messages":  [
+                     {
+                         "text":  "\u00261\u00262\u00263\u00264",
+                         "number":  "000"
+                     },
+                     {
+                         "text":  "Arbeitszeitplanregel (SCHKZ) ist leer",
+                         "number":  "001"
+                     },
+                     {
+                         "text":  "Arbeitszeitplanregel \u00261 nicht gefunden",
+                         "number":  "002"
+                     },
+                     {
+                         "text":  "Gueltig-ab muss kleiner/gleich Gueltig-bis sein",
+                         "number":  "003"
+                     },
+                     {
+                         "text":  "Durchschnittswochenstunden ausserhalb Bereich",
+                         "number":  "004"
+                     },
+                     {
+                         "text":  "Periodenarbeitszeitplan \u00261 nicht gefunden",
+                         "number":  "005"
+                     },
+                     {
+                         "text":  "Tagesplan \u00261 existiert nicht",
+                         "number":  "006"
+                     },
+                     {
+                         "text":  "Wochensumme weicht von Ø-Wochenwert ab",
+                         "number":  "007"
+                     },
+                     {
+                         "text":  "Tagesplan-Code (TPROG) ist leer",
+                         "number":  "010"
+                     },
+                     {
+                         "text":  "Tagesplan hat 0 Sollstunden (Frei-Tag)",
+                         "number":  "011"
+                     },
+                     {
+                         "text":  "Arbeitsbeginn muss vor Arbeitsende liegen",
+                         "number":  "012"
+                     },
+                     {
+                         "text":  "Kernzeitbeginn muss vor Kernzeitende liegen",
+                         "number":  "013"
+                     },
+                     {
+                         "text":  "Kernzeit muss innerhalb des Sollrahmens liegen",
+                         "number":  "014"
+                     },
+                     {
+                         "text":  "Kernzeit muss innerhalb der Normalzeit liegen",
+                         "number":  "015"
+                     },
+                     {
+                         "text":  "Normalzeit muss innerhalb des Sollrahmens liegen",
+                         "number":  "016"
+                     },
+                     {
+                         "text":  "Anfangstoleranz liegt ausserhalb des Sollrahmens",
+                         "number":  "017"
+                     },
+                     {
+                         "text":  "Sollstunden nicht plausibel zu Rahmen/Pausen",
+                         "number":  "018"
+                     },
+                     {
+                         "text":  "Pausenplan (PAMOD) ist leer",
+                         "number":  "020"
+                     },
+                     {
+                         "text":  "Pausenbeginn muss vor Pausenende liegen",
+                         "number":  "021"
+                     },
+                     {
+                         "text":  "Pause liegt ausserhalb des Arbeitszeitrahmens",
+                         "number":  "022"
+                     },
+                     {
+                         "text":  "Pausenplan \u00261 existiert nicht",
+                         "number":  "023"
+                     },
+                     {
+                         "text":  "Gueltiger offener Customizing-Auftrag erforderlich",
+                         "number":  "030"
+                     },
+                     {
+                         "text":  "Loeschung erfordert vollstaendigen T508A-Schluessel",
+                         "number":  "031"
+                     },
+                     {
+                         "text":  "Kein T508A-Satz zum Loeschen gefunden",
+                         "number":  "032"
+                     },
+                     {
+                         "text":  "Personalnummer und AZP-Regel sind Pflicht",
+                         "number":  "040"
+                     },
+                     {
+                         "text":  "HR_MAINTAIN_MASTERDATA fehlgeschlagen",
+                         "number":  "041"
+                     },
+                     {
+                         "text":  "IT0007 Zuordnung erfolgreich",
+                         "number":  "042"
+                     },
+                     {
+                         "text":  "Kein offener Customizing-Auftrag verfuegbar",
+                         "number":  "050"
+                     },
+                     {
+                         "text":  "Neue Regel-ID ist Pflicht",
+                         "number":  "051"
+                     },
+                     {
+                         "text":  "Kopieren/Transport fehlgeschlagen",
+                         "number":  "052"
+                     },
+                     {
+                         "text":  "Jahr und Monat sind Pflicht",
+                         "number":  "053"
+                     },
+                     {
+                         "text":  "Keine Simulationstage ermittelt",
+                         "number":  "054"
+                     },
+                     {
+                         "text":  "Speichern/Transport fehlgeschlagen",
+                         "number":  "055"
+                     },
+                     {
+                         "text":  "Loeschen/Transport fehlgeschlagen",
+                         "number":  "056"
+                     }
+                 ],
+    "header":  {
+                   "note":  "SAPRead MSAG returned messages:[]. Texts below are local SE91 template to maintain.",
+                   "description":  "AZP Validierungs- und Meldungstexte",
+                   "originalLanguage":  "de",
+                   "syncDate":  "2026-07-23",
+                   "package":  "ZAZP_HR_TIME",
+                   "systemMessagesEmpty":  true
+               },
+    "formatVersion":  "1"
 }

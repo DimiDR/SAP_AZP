@@ -29,6 +29,8 @@ define root view entity ZC_ZAZP_WorkScheduleRule
       WorkdaysPerWeek,
       ReferenceDate,
       OffsetDays,
+      Status,
+      StatusCriticality,
       LastChangedAt,
       LocalLastChangedAt,
       _Weeks           : redirected to composition child ZC_ZAZP_WeekPattern,

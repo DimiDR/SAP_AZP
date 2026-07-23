@@ -29,6 +29,12 @@ CLASS lhc_rule DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS listtransportrequests FOR MODIFY
       IMPORTING keys FOR ACTION rule~listtransportrequests
       RESULT result.
+    METHODS reademployeeassignment FOR MODIFY
+      IMPORTING keys FOR ACTION rule~reademployeeassignment
+      RESULT result.
+    METHODS assignemployee FOR MODIFY
+      IMPORTING keys FOR ACTION rule~assignemployee
+      RESULT result.
 ENDCLASS.
 
 CLASS lhc_rule IMPLEMENTATION.
@@ -610,6 +616,118 @@ CLASS lhc_rule IMPLEMENTATION.
                    text     = 'Keine offenen Customizing-Auftraege' )
         ) TO reported-rule.
       ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD reademployeeassignment.
+    DATA lo_asg TYPE REF TO zcl_zazp_assignment.
+    DATA ls_asg TYPE zcl_zazp_assignment=>ty_assignment.
+    DATA lv_key_date TYPE d.
+
+    lo_asg = NEW #( ).
+
+    LOOP AT keys INTO DATA(ls_key).
+      lv_key_date = ls_key-%param-keydate.
+      IF lv_key_date IS INITIAL.
+        lv_key_date = sy-datum.
+      ENDIF.
+
+      IF ls_key-%param-pernr IS INITIAL.
+        APPEND VALUE #( %cid = ls_key-%cid ) TO failed-rule.
+        APPEND VALUE #(
+          %cid = ls_key-%cid
+          %msg = new_message_with_text(
+                   severity = if_abap_behv_message=>severity-error
+                   text     = 'Personalnummer ist Pflicht' )
+        ) TO reported-rule.
+        CONTINUE.
+      ENDIF.
+
+      ls_asg = lo_asg->read_current(
+        pernr    = ls_key-%param-pernr
+        key_date = lv_key_date ).
+
+      APPEND VALUE #(
+        %cid   = ls_key-%cid
+        %param = VALUE #(
+          pernr         = ls_asg-pernr
+          ruleid        = ls_asg-rule_id
+          validfrom     = ls_asg-valid_from
+          validto       = ls_asg-valid_to
+          employmentpct = ls_asg-employment_pct
+          weeklyhours   = ls_asg-weekly_hours
+          success       = xsdbool( ls_asg-rule_id IS NOT INITIAL )
+          messagetext   = COND #(
+            WHEN ls_asg-rule_id IS INITIAL
+            THEN |Keine IT0007-Zuordnung fuer { ls_key-%param-pernr } am { lv_key_date DATE = USER }|
+            ELSE |Aktuell: Regel { ls_asg-rule_id }| ) )
+      ) TO result.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD assignemployee.
+    DATA lo_asg TYPE REF TO zcl_zazp_assignment.
+    DATA ls_asg TYPE zcl_zazp_assignment=>ty_assignment.
+    DATA lt_msg TYPE zif_zazp_validation=>ty_messages.
+    DATA lv_ok TYPE abap_bool.
+    DATA lv_text TYPE c LENGTH 255.
+
+    lo_asg = NEW #( ).
+
+    LOOP AT keys INTO DATA(ls_key).
+      CLEAR: ls_asg, lt_msg, lv_ok, lv_text.
+      ls_asg-pernr          = ls_key-%param-pernr.
+      ls_asg-rule_id        = ls_key-%param-ruleid.
+      ls_asg-valid_from     = ls_key-%param-validfrom.
+      ls_asg-valid_to       = ls_key-%param-validto.
+      ls_asg-employment_pct = ls_key-%param-employmentpct.
+      ls_asg-weekly_hours   = ls_key-%param-weeklyhours.
+
+      lt_msg = lo_asg->assign_rule( ls_asg ).
+
+      LOOP AT lt_msg INTO DATA(ls_msg).
+        DATA(lv_sev) = COND #(
+          WHEN ls_msg-severity = zif_zazp_validation=>c_severity-error
+            THEN if_abap_behv_message=>severity-error
+          WHEN ls_msg-severity = zif_zazp_validation=>c_severity-warning
+            THEN if_abap_behv_message=>severity-warning
+          ELSE if_abap_behv_message=>severity-success ).
+        APPEND VALUE #(
+          %cid = ls_key-%cid
+          %msg = new_message_with_text(
+                   severity = lv_sev
+                   text     = CONV string( ls_msg-text ) )
+        ) TO reported-rule.
+        IF ls_msg-severity = zif_zazp_validation=>c_severity-error.
+          lv_ok = abap_false.
+          lv_text = ls_msg-text.
+        ELSEIF lv_text IS INITIAL.
+          lv_ok = abap_true.
+          lv_text = ls_msg-text.
+        ENDIF.
+      ENDLOOP.
+
+      IF line_exists( lt_msg[ severity = zif_zazp_validation=>c_severity-error ] ).
+        lv_ok = abap_false.
+        APPEND VALUE #( %cid = ls_key-%cid ) TO failed-rule.
+      ELSE.
+        lv_ok = abap_true.
+      ENDIF.
+
+      APPEND VALUE #(
+        %cid   = ls_key-%cid
+        %param = VALUE #(
+          pernr         = ls_asg-pernr
+          ruleid        = ls_asg-rule_id
+          validfrom     = COND #( WHEN ls_asg-valid_from IS NOT INITIAL
+                                  THEN ls_asg-valid_from ELSE sy-datum )
+          validto       = COND #( WHEN ls_asg-valid_to IS NOT INITIAL
+                                  THEN ls_asg-valid_to ELSE '99991231' )
+          employmentpct = ls_asg-employment_pct
+          weeklyhours   = ls_asg-weekly_hours
+          success       = lv_ok
+          messagetext   = lv_text )
+      ) TO result.
     ENDLOOP.
   ENDMETHOD.
 

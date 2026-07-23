@@ -161,6 +161,7 @@ Danach ggf. lokale Anpassungen (Annotations, Mockdaten) erneut prüfen. Für den
 |---|---|---|
 | Transaktion / Report | `ZAZP01` | Validierung & Monatssimulation (GUI) |
 | Klassen | `ZCL_ZAZP_VALIDATION`, `_PERSIST`, `_TRANSPORT`, `_GENERATION`, `_ASSIGNMENT` | Zentrale Logik |
+| RAP Actions | `copyAsTemplate`, `simulateMonth`, Transport-*, `readEmployeeAssignment`, `assignEmployee` | Fiori-Aktionen |
 | RAP Root | `ZI_ZAZP_WORKSCHEDULERULE` / `ZC_ZAZP_WORKSCHEDULERULE` | Business Object |
 | Service Definition | `ZUI_ZAZP_WORKSCHEDULERULE` | OData-Exposition |
 | Service Binding (UI) | `ZUI_ZAZP_RULE_UI` | primäre Fiori-Anbindung |
@@ -190,4 +191,4 @@ OData-URL (Binding `ZUI_ZAZP_RULE_UI`):
 - **Technisch:** [docu/technisch/](docu/technisch/) — CDS, Services, Objektliste, ToDos, P1-Schritte
 - **ABAP-Spiegel:** [sap/README.md](sap/README.md)
 
-Stand: 2026-07-20
+Stand: 2026-07-23

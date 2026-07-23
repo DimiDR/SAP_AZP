@@ -80,7 +80,9 @@
 | ☐ | Objekt | Typ | Zweck |
 |---|---|---|---|
 | ☑ | `ZA_ZAZP_CopyParams` | CDS Abstract Entity | Parameter `copyAsTemplate` |
-| ☑ | `ZA_ZAZP_MonthParams` | CDS Abstract Entity | Parameter `simulateMonth` |
+| ☑ | `ZA_ZAZP_SimParams` | CDS Abstract Entity | Parameter `simulateMonth` (Jahr/Monat) |
+| ☑ | `ZA_ZAZP_MonthParams` | CDS Abstract Entity | Parameter Assignment (`read`/`assign`) |
+| ☑ | `ZA_ZAZP_TransportParams` | CDS Abstract Entity | Parameter `createTransportRequest` / `setPreferredTransport` |
 | ☑ | `ZI_ZAZP_SimDay` | CDS Abstract Entity | Ergebniszeile Simulation |
 
 ---

@@ -1,0 +1,156 @@
+<mvc:View
+	controllerName="azpworkschedulerule.ext.controller.Assignment"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	height="100%">
+	<Page
+		id="azpAssignmentPage"
+		title="{i18n>assignPageTitle}"
+		showNavButton="true"
+		navButtonPress=".onNavBack"
+		busy="{asg>/busy}"
+		busyIndicatorDelay="0"
+		class="sapUiResponsiveContentPadding">
+		<content>
+			<VBox class="sapUiSmallMargin">
+				<MessageStrip
+					text="{i18n>assignPageHint}"
+					type="Information"
+					showIcon="true"
+					class="sapUiTinyMarginBottom"/>
+
+				<MessageStrip
+					visible="{= !!${asg>/message} }"
+					text="{asg>/message}"
+					type="{asg>/messageType}"
+					showIcon="true"
+					class="sapUiTinyMarginBottom"/>
+
+				<f:SimpleForm
+					editable="true"
+					layout="ColumnLayout"
+					columnsM="2"
+					columnsL="2"
+					columnsXL="2"
+					title="{i18n>assignTargetSection}">
+					<f:content>
+						<Label text="{i18n>assignRuleId}" required="true"/>
+						<Input
+							value="{asg>/ruleId}"
+							width="12rem"
+							maxLength="8"
+							placeholder="{i18n>assignRulePlaceholder}"
+							showValueHelp="true"
+							valueHelpRequest=".onRuleValueHelp"/>
+
+						<Label text="{i18n>assignKeyDate}"/>
+						<DatePicker
+							value="{asg>/keyDate}"
+							valueFormat="yyyy-MM-dd"
+							displayFormat="medium"
+							width="12rem"/>
+
+						<Label text="{i18n>assignValidFrom}"/>
+						<DatePicker
+							value="{asg>/validFrom}"
+							valueFormat="yyyy-MM-dd"
+							displayFormat="medium"
+							width="12rem"/>
+
+						<Label text="{i18n>assignValidTo}"/>
+						<DatePicker
+							value="{asg>/validTo}"
+							valueFormat="yyyy-MM-dd"
+							displayFormat="medium"
+							width="12rem"/>
+
+						<Label text="{i18n>assignEmpct}"/>
+						<Input
+							value="{asg>/employmentPct}"
+							type="Number"
+							width="8rem"
+							placeholder="100"/>
+
+						<Label text="{i18n>assignWeeklyHours}"/>
+						<Input
+							value="{asg>/weeklyHours}"
+							type="Number"
+							width="8rem"
+							placeholder="38.50"/>
+					</f:content>
+				</f:SimpleForm>
+
+				<Table
+					id="asgEmployeeTable"
+					mode="MultiSelect"
+					items="{asg>/employees}"
+					growing="true"
+					growingThreshold="50"
+					noDataText="{i18n>assignEmployeesEmpty}"
+					class="sapUiSmallMarginTop">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title text="{i18n>assignEmployeesSection}"/>
+							<ToolbarSpacer/>
+							<SearchField
+								width="14rem"
+								value="{asg>/addPernr}"
+								placeholder="{i18n>assignPernrAddPlaceholder}"
+								search=".onAddPernr"/>
+							<Button
+								text="{i18n>assignPernrSearch}"
+								icon="sap-icon://value-help"
+								press=".onPernrValueHelp"/>
+							<Button
+								text="{i18n>assignReadSelected}"
+								icon="sap-icon://display"
+								press=".onReadSelected"/>
+							<Button
+								text="{i18n>assignRemoveSelected}"
+								type="Transparent"
+								press=".onRemoveSelected"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="8rem">
+							<Text text="{i18n>assignPernr}"/>
+						</Column>
+						<Column width="10rem">
+							<Text text="{i18n>assignCurrent}"/>
+						</Column>
+						<Column>
+							<Text text="{i18n>assignStatus}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{asg>pernr}"/>
+								<Text
+									text="{= ${asg>currentRuleId} ? ${asg>currentRuleId} : ${i18n>assignNone} }"/>
+								<ObjectStatus
+									text="{asg>statusText}"
+									state="{asg>statusState}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button
+					text="{i18n>transportCancel}"
+					press=".onNavBack"/>
+				<Button
+					text="{i18n>assignConfirmSelected}"
+					type="Emphasized"
+					icon="sap-icon://employee"
+					press=".onAssignSelected"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

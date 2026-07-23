@@ -1,9 +1,9 @@
 # AZP-Tool – Logik & Service (ABAP RAP) · Dokumentation
 
 > Beschreibt die **Logik in SAP**: die zentrale ABAP-Klasse `ZCL_ZAZP_VALIDATION`, das **RAP-Behavior**
-> für die optionale Fiori-UI und die **SM30-Validierungs-Events** für SAP GUI. **Beide Oberflächen rufen
+> für die Fiori-UI und die **SM30-Validierungs-Events** für SAP GUI. **Beide Oberflächen rufen
 > dieselbe Logik** → keine Doppelpflege. Baut auf [`AZP-CDS-Datenmodell.md`](AZP-CDS-Datenmodell.md) auf.
-> Stand: 2026-07-17
+> Stand: 2026-07-23
 
 ---
 
@@ -107,10 +107,25 @@ authorization master ( instance )
   action ( features : instance ) copyAsTemplate
          parameter ZA_ZAZP_CopyParams   result [1] $self;
   action simulateMonth
-         parameter ZA_ZAZP_MonthParams  result [1..*] ZI_ZAZP_SimDay;
+         parameter ZA_ZAZP_SimParams    result [0..*] ZI_ZAZP_SimDay;
+
+  // Transport (statisch)
+  static action listTransportRequests
+         result [0..*] ZI_ZAZP_SimDay;
+  static action createTransportRequest
+         parameter ZA_ZAZP_TransportParams result [1] ZI_ZAZP_SimDay;
+  static action setPreferredTransport
+         parameter ZA_ZAZP_TransportParams;
+
+  // Mitarbeiterzuordnung IT0007 (statisch, Weg B)
+  static action readEmployeeAssignment
+         parameter ZA_ZAZP_MonthParams result [1] ZI_ZAZP_SimDay;
+  static action assignEmployee
+         parameter ZA_ZAZP_MonthParams result [1] ZI_ZAZP_SimDay;
 
   association _Weeks       { create; with draft; }
-  association _Assignments { create; with draft; }
+  association _DailySchedules { create; with draft; }
+  association _BreakSchedules { create; with draft; }
 }
 ```
 
@@ -118,6 +133,10 @@ authorization master ( instance )
 - **`saver`** (unmanaged save) delegiert an `ZCL_ZAZP_PERSIST` → schreibt `T508A/T551A/T550A/T550P` und
   Transportauszeichnung (nativ, → [`AZP-Transport-Service-Spezifikation.md`](AZP-Transport-Service-Spezifikation.md)).
 - **Draft** nur für Fiori; Aktivdaten bleiben in den Standardtabellen.
+- `ZA_ZAZP_TransportParams` nur Transportfelder (`TransportRequest` / `TransportDescription`).
+- `ZA_ZAZP_SimParams` nur Jahr/Monat für `simulateMonth`.
+- `ZA_ZAZP_MonthParams` / `ZI_ZAZP_SimDay` für Zuordnung
+  (Pernr, RuleId, ValidFrom/To, EmploymentPct, WeeklyHours; Ergebnis zusätzlich Success, MessageText, Transport-Echo).
 
 ---
 
@@ -172,10 +191,16 @@ die dieselben Klassen nutzt. Der Transport läuft über die SM30-Standard-Auftra
 
 ## 7. Weg B – Mitarbeiterzuordnung (IT0007)
 
-Separat von der AZP-Definition; Stammdaten, ohne Transport:
+Separat von der AZP-Definition; **Stammdaten, ohne Transport**:
 
-- RAP-Action bzw. Report ruft **`HR_MAINTAIN_MASTERDATA`** für Infotyp 0007 (Feld `SCHKZ` = Regel).
-- In SAP GUI klassisch über `PA30`/`PA40`.
+| Schicht | Objekt / Einstieg |
+|---|---|
+| Logik | `ZCL_ZAZP_ASSIGNMENT` → `read_current` / `assign_rule` via `HR_MAINTAIN_MASTERDATA` (INS/MOD, Infotyp 0007, Feld `SCHKZ`) |
+| RAP | Statische Actions `readEmployeeAssignment` / `assignEmployee` (Parameter in `ZA_ZAZP_MonthParams`, Ergebnis in `ZI_ZAZP_SimDay`) |
+| Fiori | Button **„Mitarbeiter zuordnen“** auf List Report + Object Page → Dialog `AssignmentDialog` (`ext/lib/Assignment.js`) |
+| GUI | klassisch `PA30`/`PA40`; Smoke-Read im Report `ZAZP_E2E` |
+
+Berechtigung: `P_ORGIN` (Schreiben). Ohne Recht → sauberer Fehler, kein Datenschreiben.
 
 ---
 
@@ -192,6 +217,8 @@ Separat von der AZP-Definition; Stammdaten, ohne Transport:
 
 ## 9. Nächste Schritte
 
-1. ~~Logik-Klassen / Persist / Generation / Assignment~~ → erledigt (siehe [`AZP-ABAP-Implementierungsstand.md`](AZP-ABAP-Implementierungsstand.md)).
-2. Manuell: SE91-Texte `ZAZP`, SE54-Events, FUGR `ZAZP_SM30` in SE80 aktivieren. Transaktion `ZAZP01` erledigt.
-3. Web-UI: Draft, Actions, Metadata Extensions, Deep Create und Bindings (`ZUI_ZAZP_RULE_O4` / `ZUI_ZAZP_RULE_UI`) erledigt — siehe [AZP-OData-V4-Service.md](AZP-OData-V4-Service.md). Noch offen: PFCG-Rollen, FLP-Kachel, DCL-Auth.
+1. ~~Logik-Klassen / Persist / Generation / Assignment~~ → erledigt.
+2. ~~RAP Actions: copy / simulate / Transport / IT0007-Zuordnung~~ → erledigt (Spiegel: `sap/`).
+3. Manuell: SE91-Texte `ZAZP`, SE54-Events, FUGR `ZAZP_SM30` in SE80 aktivieren.
+4. Web-UI-Kern (Draft, Extensions, Binding) erledigt — siehe [AZP-OData-V4-Service.md](AZP-OData-V4-Service.md) und [AZP-Frontend-Dokumentation.md](../fachlich/AZP-Frontend-Dokumentation.md).
+5. Noch offen: PFCG-Rollen, FLP-Kachel, Service-Republish im Customizing-Client, MSAG-Texte.

@@ -20,6 +20,8 @@ use etag
   use action listTransportRequests;
   use action createTransportRequest;
   use action setPreferredTransport;
+  use action readEmployeeAssignment;
+  use action assignEmployee;
 
   use association _Weeks { create; with draft; }
   use association _DailySchedules { create; with draft; }

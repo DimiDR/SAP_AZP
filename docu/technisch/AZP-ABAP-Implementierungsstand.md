@@ -1,32 +1,31 @@
-# AZP – ABAP-Implementierungsstand (ohne Web-UI)
+# AZP – ABAP-Implementierungsstand
 
-Stand: 2026-07-19 · System S4P · Paket `ZAZP_HR_TIME` · Transporte `S4PK913039` / `S4PK913041`
-
-Web-UI (Fiori/Metadata/Draft-Actions) bewusst zurückgestellt.
+Stand: 2026-07-23 · System S4P · Paket `ZAZP_HR_TIME` · Transporte u. a. `S4PK913039` / `S4PK913041`  
+Lokaler Spiegel: [`sap/README.md`](../../sap/README.md) · Offene Punkte: [AZP-Offene-ToDos.md](AZP-Offene-ToDos.md)
 
 ---
 
-## 1. Aktiv und getestet (ADT Syntax OK)
+## 1. Aktiv (ADT Syntax OK)
 
-| Objekt | Änderung |
+| Objekt | Stand |
 |---|---|
-| `ZIF_ZAZP_VALIDATION` | Neu: `ty_rule_ctx`, `validate_rule_ctx`, Message-Konstanten, `valid_to` |
-| `ZCL_ZAZP_VALIDATION` | Payload-Prüfung via Context; DB-Load nur in `validate_rule` |
-| `ZCL_ZAZP_PERSIST` | Speichert nach `validate_rule_ctx`; neu `delete_rule` mit vollem T508A-Schlüssel; korrekte T508S-Tabkey |
-| `ZCL_ZAZP_TRANSPORT` | Neu `ensure_customizing_request` (open oder anlegen) |
-| `ZCL_ZAZP_GENERATION` | Feiertage via `HOLIDAY_CHECK_AND_GET_INFO`; erweiterte Schlüsselparameter |
-| `ZCL_ZAZP_ASSIGNMENT` | INS/MOD je nach IT0007-Existenz; korrekte FM-Signatur |
-| `ZI_ZAZP_WorkScheduleRule` | Schlüssel = T508A-PK: `EsGrouping/HolidayCalendarId/PsGrouping/RuleId/ValidTo` |
-| `ZC_ZAZP_WorkScheduleRule` | gleiche Schlüssel + `ReferenceDate`/`OffsetDays` |
-| `ZI_ZAZP_WorkScheduleRule` (BDEF) | Key-Felder `readonly:update`; Validierungen belassen |
-| `ZBP_I_ZAZP_WORKSCHEDULERULE` | getrennte Validierungen; Saver mit Fehler-Reporting; voller Delete-Key |
-| `ZAZP01` (PROG + TRAN) | Parameter für ZEITY/MOFID/MOSID; Simulation mit Feiertagsflag |
+| `ZIF_ZAZP_VALIDATION` | Context-API `validate_rule_ctx`, Message-Konstanten |
+| `ZCL_ZAZP_VALIDATION` | Payload-Prüfung; DB-Load nur in `validate_rule` |
+| `ZCL_ZAZP_PERSIST` | `save_rule` / `delete_rule` + CTS |
+| `ZCL_ZAZP_TRANSPORT` | list / create / ensure / preferred |
+| `ZCL_ZAZP_GENERATION` | Monatssimulation inkl. Feiertage |
+| `ZCL_ZAZP_ASSIGNMENT` | IT0007 `read_current` / `assign_rule` (INS/MOD) |
+| `ZI_`/`ZC_ZAZP_WorkScheduleRule` | inkl. virtueller Felder `Status` / `StatusCriticality` |
+| BDEF `ZI_`/`ZC_` | Draft, Deep Create, Validierungen, Actions (copy, simulate, Transport, **Zuordnung**) |
+| `ZBP_I_ZAZP_WORKSCHEDULERULE` | Behavior Pool inkl. `readEmployeeAssignment` / `assignEmployee` |
+| `ZAZP01` / `ZAZP_E2E` | GUI-Validierung/Simulation bzw. Smoke-Report |
+| Service `ZUI_ZAZP_RULE_UI` / `_O4` | published (Republish nach Action-Änderungen ggf. manuell) |
 
-**GUI-Testpfad:** Transaktion `/nZAZP01` (oder SE38 Report `ZAZP01`) → Validierung + Monatssimulation.
+**GUI-Testpfad:** `/nZAZP01` · **Fiori-Testpfad:** List Report → Mitarbeiter zuordnen / Validieren / Transport / Simulation.
 
 ---
 
-## 2. Manuell nachziehen (SE80 / SE91 / SE93 / SE54)
+## 2. Manuell nachziehen (SE80 / SE91 / SE54 / FLP)
 
 ### 2.1 Nachrichtenklasse `ZAZP` (SE91)
 
@@ -43,6 +42,7 @@ Texte anlegen (Vorlage auch in `sap/msag/zazp.msag.json`):
 | 020–023 | Pausenplan-Prüfungen |
 | 030–032 | Transport / Löschen |
 | 040–042 | IT0007-Zuordnung |
+| 050–056 | RAP Transport / Copy / Simulation / Persist |
 
 ### 2.2 Transaktion `ZAZP01` (SE93) — erledigt
 

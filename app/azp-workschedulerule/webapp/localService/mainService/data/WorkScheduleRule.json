@@ -50,7 +50,7 @@
     "AvgMonthHours": 160.0,
     "AvgYearHours": 1924.0,
     "WorkdaysPerWeek": 5.0,
-    "Status": "Aktiv",
-    "StatusCriticality": 3
+    "Status": "In SAP",
+    "StatusCriticality": 5
   }
 ]
